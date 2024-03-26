@@ -1,0 +1,49 @@
+<!-- <div id="nav-top-spacer" *ngIf="getShowSpacer()"></div> -->
+
+<nav [ngClass]="getAnimateNav()? 'nav animated' : 'nav'">
+    <div id="head" class="color-gradient-h1">
+        <div id="logo-container" class="acc">
+            <img src="./assets/imgs/common/logo-color-text.png" />
+        </div>
+        <ul id="nav-list-big">
+
+            <ng-container *ngFor="let route of getRoutes();let i = index">
+                <li [ngClass]="getCurrentPageInd() == i? 'item active' : 'item'" (click)="setCurPageInd(i)">
+                    <button class="item-btn" (click)="navigateToPage(i)">
+                        <div class="link-container">
+                            <!-- <h1>
+                                <fa-icon [icon]="getPageIcons()[i]"></fa-icon>
+                            </h1> -->
+                            <p>
+                                {{route}}
+                            </p>
+                        </div>
+                        <div class="underline"></div>
+                    </button>
+                </li>
+            </ng-container>
+        </ul>
+
+        <button id="burger-btn" (click)="toggleNav()">
+            <h1 id="burger-menu">
+                <fa-icon [icon]="burgerIcon"></fa-icon>
+            </h1>
+            <p>{{getPages()[getCurrentPageInd()]}}</p>
+        </button>
+
+        <ul [ngClass]="getNavIsOpen() ? 'nav-list open' : 'nav-list'">
+            <ng-container *ngFor="let route of getRoutes();let i = index">
+                <li [ngClass]="getCurrentPageInd() == i? 'item active' : 'item'" (click)="setCurPageInd(i)">
+                    <button (click)="navigateToPage(i)">
+                        <h1>
+                            <fa-icon [icon]="getPageIcons()[i]"></fa-icon>
+                        </h1>
+                        <p>
+                            {{route}}
+                        </p>
+                    </button>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+</nav>

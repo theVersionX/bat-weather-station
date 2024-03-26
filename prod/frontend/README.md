@@ -1,3 +1,22 @@
+
+_________________________________________________________________________________
+
+
+# How To setup Project
+
+1. install latest Angular cli (https://angular.io/guide/setup-local)
+2. Download Project from Github
+3. navigate to prod/frontend
+4. run "npm install"
+5. run "ng serve"
+6. Open Browser, go to http://localhost:4200/
+
+# Projekt Weiterentwickeln
+
+## Projekt Struktur
+1. Neue Seite erstellen: ng g c pages/new-page-name
+2. Neue Klass zur berechnung erstellen in 
+
 # Frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.2.

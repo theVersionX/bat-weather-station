@@ -1,0 +1,258 @@
+@import "../../../shared/variables.less";
+
+#nav-top-spacer {
+    height: @navbar-height;
+}
+
+
+nav {
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 4;
+}
+
+.nav.animated {
+    animation: startAnimation 1s 0s;
+    animation-fill-mode: both;
+}
+
+@keyframes startAnimation {
+    0% {
+        transform: translateY(calc(@navbar-height * -2));
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+
+#head {
+    background-color: @color-navbar;
+    border-bottom: solid 1px @color-accent1;
+    box-shadow: @box-shadow-1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: @navbar-height;
+    position: relative;
+    top: 0px;
+    z-index: 4;
+}
+
+#logo-container {
+    height: @navbar-height;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 10;
+    margin-right: @margin-smaller;
+}
+
+#logo-container img {
+    height: calc(100% - @margin-smaller * 2);
+    display: block;
+}
+
+#burger-menu {
+    color: @color-accent2;
+    padding: 0px @margin-small;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    transition: 0.5s color;
+    color: @color-dark;
+
+}
+
+#burger-menu:hover {
+    color: @color-accent1;
+}
+
+#head .item-btn p {
+    color: @color-dark;
+    font-size: @fontsize-h2;
+}
+
+//nav-list wide--------------------
+
+#nav-list-big {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+#nav-list-big h1 {
+    color: @color-dark;
+    font-size: @fontsize-std;
+    margin-right: @margin-smaller;
+}
+
+#nav-list-big .item .item-btn {
+    display: flex;
+    flex-direction: column;
+}
+
+#nav-list-big .link-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#nav-list-big .item .item-btn  p {
+    font-size: @fontsize-std;
+}
+
+#nav-list-big .item-btn  {
+    padding: @padding-small;
+}
+
+.item .underline {
+    height: 2px;
+    width: 100%;
+    background-color: transparent;
+    margin-top: 0px;
+    transition: 0.5s background-color;
+}
+
+.item.item.active .underline,
+.item:hover .underline {
+    background-color: @color-dark;
+}
+
+//nav-list--------------------------
+.nav-list {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    width: 100%;
+}
+
+.nav-list li {
+    background-color: @color-navbar;
+    //background-color: rgba(@color-accent2,0.9);
+    height: @navbar-height;
+    position: absolute;
+    transition: 0.5s left, 0.5s background-color;
+    width: 100%;
+}
+
+.nav-list li:hover {
+    background-color: rgba(@color-navbar-light, 1)
+}
+
+.nav-list li:nth-child(1) {
+    top: @navbar-height;
+    left: -100vw;
+}
+
+.nav-list li:nth-child(2) {
+    top: calc(@navbar-height * 2);
+    left: -130vw;
+}
+
+.nav-list li:nth-child(3) {
+    top: calc(@navbar-height * 3);
+    left: -160vw;
+}
+
+.nav-list li:nth-child(4) {
+    top: calc(@navbar-height * 4);
+    left: -190vw;
+}
+
+.nav-list li:nth-child(5) {
+    top: calc(@navbar-height * 5);
+    left: -210vw;
+}
+
+.nav-list li:nth-child(6) {
+    top: calc(@navbar-height * 6);
+    left: -230vw;
+}
+
+.nav-list li:nth-child(7) {
+    top: calc(@navbar-height * 7);
+    left: -250vw;
+}
+
+.nav-list li:nth-child(8) {
+    top: calc(@navbar-height * 8);
+    left: -270vw;
+}
+
+.nav-list li:last-child {
+    box-shadow: 0px 20px 10px rgba(black, 0.3)
+}
+
+.nav-list button {
+    width: 100%;
+    height: @navbar-height;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.nav-list button h1,
+.nav-list button p {
+    transform: scale(0.5);
+    transition: 1.2s transform;
+}
+
+.nav-list.open button h1,
+.nav-list.open button p {
+    transform: scale(1);
+}
+
+.nav-list h1 {
+    width: @fontsize-h1;
+}
+
+.nav-list p,
+.nav-list h1 {
+    color: @color-dark;
+    padding-left: @padding-small;
+    font-size: @fontsize-h2;
+}
+
+.nav-list .item.active p,
+.nav-list li:hover p,
+.nav-list li:hover h1,
+.nav-list .item.active h1 {
+    color: @color-accent1;
+}
+
+.nav-list.closed li {
+    left: 0px;
+}
+
+.nav-list.open li {
+    left: 0px;
+}
+
+.nav-list.closed li {
+    top: 0px;
+}
+
+#head #burger-btn,
+#nav-list {
+    display: none;
+    height: 100%;
+}
+
+@media screen and(max-width:@max-w-3) {
+    #nav-list-big {
+        display: none;
+    }
+
+    #head #burger-btn,
+    #nav-list{
+        display: flex;
+    }
+}

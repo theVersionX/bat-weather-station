@@ -1,0 +1,25 @@
+<div id="main-container">
+    <ul id="link-list">
+        <li>
+            <h1 class="title-first">{{getWebsiteName()}}</h1>
+        </li>
+        <ng-container *ngFor="let sectionTitle of sectionTitles; let i = index">
+            <li (click)="navigateToPage(i)">
+                <h1 class="title-first">{{sectionTitle}}</h1>
+            </li>
+        </ng-container>
+    </ul>
+    <div  class="copyright-container">
+        <p> ©
+            {{currentYear}}
+            HSLU Technik & Architektur
+            6048 Horw
+        </p>
+    </div>
+
+    <a class="webdesign-link" href="https://www.versionx.ch/#/Home" target="_blank">
+        <p>
+            Website: Gut Dominic | VersionX.ch
+        </p>
+    </a>
+</div>
