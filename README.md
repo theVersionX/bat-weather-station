@@ -22,5 +22,5 @@
 - Interfaces
     - Neue Interfaces in shared/interfaces/
 - API zu Datenbank erweitern:
-    - PHP API ist im Ordner backend aufzufinden
+    - PHP API ist im Ordner backend aufzufinden. Siehe database-shared.php für weitere Schritte.
     - api-service.ts in services/api-service-ts übernimmt POST-Requests für Daten senden & empfangen

@@ -9,7 +9,7 @@ export class GlobalVariablesService {
   serverPath: string = "https://weather.versionx.ch/api";
   
   isSafari: boolean = true;
-  
+
   constructor() {
     this.isSafari = this.getBrowserName() == 'safari';//todo uncomment
   }

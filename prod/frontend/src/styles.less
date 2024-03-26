@@ -22,7 +22,7 @@ html,
 body {
   margin: 0px;
   padding: 0px;
-  background-color: white
+  background-color: white;
 }
 
 a,
@@ -48,7 +48,7 @@ h4 {
   margin: 0px;
   padding: 0px;
   font-family: @std-font;
-  color: white;
+  color: @color-dark;
 }
 
 h1 {
@@ -71,7 +71,7 @@ p {
   text-align: center;
   max-width: @max-w-2;
   margin-top: 0px;
-  color: white;
+  color: @color-dark;
 }
 
 em {
@@ -83,12 +83,7 @@ ul {
   padding: 0px;
   list-style-type: none;
 }
-span{
-  color: black;
-}
-font{
-  font-family: @font-serif;
-}
+
 form,
 textarea {
   font-size: @fontsize-std;
@@ -101,7 +96,7 @@ textarea {
   width: calc(100% - @padding-small * 2);
   height: @nav-item-height;
   background-color: white;
-  color: black;
+  color: @color-dark;
   margin-bottom: @margin-small;
   border: solid 1px @color-light;
   outline: none;
@@ -125,30 +120,25 @@ label {
   font-size: @fontsize-h2;
   text-align: center;
   text-transform: uppercase;
-  color: white;
+  color: @color-dark;
 }
 
 .title-second {
   font-weight: 900;
   font-size: @fontsize-title-large;
   text-align: center;
-  color: white;
+  color: @color-dark;
 }
 
 .title-fat {
     font-weight: 900;
     font-size: @fontsize-title-large;
     text-align: center;
-    color: white;
+    color: @color-dark;
   }
 .section-title {
   color: @color-accent1;
   margin-bottom: @margin-small;
-}
-
-
-.continuous-text {
-  color: @color-accent1;
 }
 
 .btn-std {
@@ -163,14 +153,6 @@ label {
 
 .btn-std:hover {
   animation: 1s wobbleSmooth;
-}
-
-.citation{
-  margin: @margin-small;
-  max-width: @max-w-1;
-  text-align: center;
-  font-size: @fontsize-subtitle;
-  font-family: @font-serif;
 }
 
 .acr {
@@ -191,88 +173,4 @@ label {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-//animations--------------------------------
-
-@media screen and(max-width:@max-w-2) {}
-
-
-@keyframes wobbleSmooth {
-  0% {
-    transform: translateX(0px);
-  }
-
-  15% {
-    transform: translateX(-6px) rotate(-1deg);
-  }
-
-  30% {
-    transform: translateX(5px) rotate(0.75deg);
-  }
-
-  45% {
-    transform: translateX(-3px) rotate(-0.75deg);
-  }
-
-  60% {
-    transform: translateX(2px) rotate(0.5deg);
-  }
-
-  75% {
-    transform: translateX(-1px) rotate(-0.25deg);
-  }
-
-  100% {
-    transform: translateX(0px);
-  }
-}
-
-@keyframes slideInLeft {
-  0% {
-    transform: translateX(-100vw);
-  }
-
-  60% {
-    transform: translateX(5vw);
-  }
-
-  100% {
-    transform: translateX(0px);
-  }
-}
-
-@keyframes slideInRight {
-  0% {
-    transform: translateX(100vw);
-  }
-
-  60% {
-    transform: translateX(-5vw);
-  }
-
-  100% {
-    transform: translateX(0px);
-  }
-}
-
-@keyframes slideInTop {
-  0% {
-    transform: translateY(-10vw);
-  }
-
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
 }

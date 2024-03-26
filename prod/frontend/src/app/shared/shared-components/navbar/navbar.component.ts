@@ -46,7 +46,7 @@ export class NavbarComponent {
   }
 
   getShowSpacer():boolean{
-    return this.getCurPageInd()!=0;
+    return true;//this.getCurPageInd()!=0;
   }
   
   getAnimateNav():boolean{
