@@ -4,6 +4,7 @@ require 'accessHeaders.php';
 /*#####################################################################
 To use your own Server, provide below informations. rename this file to database.php and upload all Files inside "backend" folder to https://your-domain.ch/api.
 Inside frontend Project -> services/global-variables.service change change server path
+See Database Schema in schema.sql
 */#####################################################################
 
 define('DB_HOST', '');
