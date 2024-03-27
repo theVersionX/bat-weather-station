@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GlobalVariablesService } from './global-variables.service';
+import { WeatherData } from '../shared/interfaces/weather-data';
 
 @Injectable({
   providedIn: 'root'
@@ -10,16 +11,17 @@ export class ApiService {
 
   constructor(private httpClient: HttpClient, private globalVariablesService: GlobalVariablesService) {
   }
-  sendMailToReserveTreff(responsibleEMail: string, userEMail: string, reservation: string): Observable<number> {
-    return this.httpClient.post<number>(`${this.getServerPath()}/sendMailToReserveTreff.php`, { responsibleEMail: responsibleEMail, userEMail: userEMail, reservation: reservation });
+
+  loadAllWeatherData(): Observable<WeatherData> {
+    return this.httpClient.post<WeatherData>(`${this.getServerPath()}/loadAllWeatherData.php`, {});
   }
-  loadData(dataId:string): Observable<string> {
-    return this.httpClient.post<string>(`${this.getServerPath()}/loadData.php`, {dataId:dataId});
+  loadLatestWeatherData(): Observable<WeatherData[]> {
+    return this.httpClient.post<WeatherData[]>(`${this.getServerPath()}/loadLatestWeatherData.php`, {});
   }
-  saveData(data:string,dataId:string): Observable<boolean> {
-    return this.httpClient.post<boolean>(`${this.getServerPath()}/saveData.php`, {data:data, dataId:dataId});
+  loadWindWarning(): Observable<boolean> {
+    return this.httpClient.post<boolean>(`${this.getServerPath()}/loadWindWarning.php`, {});
   }
-  getServerPath(): string {
+    getServerPath(): string {
     return this.globalVariablesService.serverPath;
   }
 }
