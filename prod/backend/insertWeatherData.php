@@ -12,15 +12,18 @@ if (isset($postdata) && !empty($postdata)) {
     if (mysqli_connect_errno()) {
         exit('Failed to connect to MySQL: ' . mysqli_connect_error());
     }
-    $sql = "INSERT INTO weather_station_data_tbl (fullPostMsg) VALUES ('{$request}')";
+        
+    $sql = "INSERT INTO weather_station_data_tbl (fullPostMsg) VALUES ('{$postdata}')";
     if (mysqli_query($con, $sql)) {
         echo json_encode(true);
     } else {
         echo json_encode(false); //konnte nicht eingetragen werden
     }
+    
     //test--------------------------------------------------------------------------------
 
     /*
+    
     $username_post = mysqli_real_escape_string($con, trim($request->username));
     $password_post = mysqli_real_escape_string($con, trim($request->password));
     $pressure_post=10;
@@ -42,6 +45,6 @@ if (isset($postdata) && !empty($postdata)) {
         } else {
             echo json_encode(false); //Account nicht gefunden
         }
-    
     */
+    
 }

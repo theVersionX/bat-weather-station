@@ -24,11 +24,11 @@
             </ng-container>
         </ul>
 
-        <button id="burger-btn" (click)="toggleNav()">
+        <button id="burger-btn" class="acr" (click)="toggleNav()">
             <h1 id="burger-menu">
                 <fa-icon [icon]="burgerIcon"></fa-icon>
             </h1>
-            <p>{{getPages()[getCurrentPageInd()]}}</p>
+            <p >{{getPages()[getCurrentPageInd()]}}</p>
         </button>
 
         <ul [ngClass]="getNavIsOpen() ? 'nav-list open' : 'nav-list'">

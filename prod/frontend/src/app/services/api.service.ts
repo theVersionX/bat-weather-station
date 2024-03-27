@@ -21,6 +21,11 @@ export class ApiService {
   loadWindWarning(): Observable<boolean> {
     return this.httpClient.post<boolean>(`${this.getServerPath()}/loadWindWarning.php`, {});
   }
+
+  insertWeatherData(msg:string): Observable<boolean> {
+    return this.httpClient.post<boolean>(`${this.getServerPath()}/insertWeatherData.php`, {msg:msg});
+  }
+
     getServerPath(): string {
     return this.globalVariablesService.serverPath;
   }
