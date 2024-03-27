@@ -5,5 +5,5 @@ export interface WeatherData {
     temperature: number,
     windStrength: number,
     humidity: number,
-    precipation: number
+    precipitation: number
 }

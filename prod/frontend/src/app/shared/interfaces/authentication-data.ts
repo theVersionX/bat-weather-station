@@ -1,4 +1,4 @@
 export interface AuthenticationData{
-    nickname:string,
+    username:string,
     password:string,
 }

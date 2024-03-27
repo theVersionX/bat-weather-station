@@ -5,6 +5,6 @@ import { AuthenticationData } from '../shared/interfaces/authentication-data';
   providedIn: 'root'
 })
 export class AccountService {
-  authenticationData:AuthenticationData={nickname:"HB9HSLU",password:"super_secure_pw"}
+  authenticationData:AuthenticationData={username:"HB9HSLU",password:"super_secure_pw"}
   constructor() { }
 }
