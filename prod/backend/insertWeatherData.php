@@ -13,7 +13,7 @@ if (isset($postdata) && !empty($postdata)) {
         exit('Failed to connect to MySQL: ' . mysqli_connect_error());
     }
         
-    $sql = "INSERT INTO weather_station_data_tbl (fullPostMsg) VALUES ('{$postdata}')";
+    $sql = "INSERT INTO weather_station_data_tbl (fullPostMsg) VALUES ('some entry')";
     if (mysqli_query($con, $sql)) {
         echo json_encode(true);
     } else {
