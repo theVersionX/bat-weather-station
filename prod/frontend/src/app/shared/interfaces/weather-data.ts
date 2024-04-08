@@ -3,7 +3,7 @@ export interface WeatherData {
     timestamp: string,
     pressure: number,
     temperature: number,
-    windStrength: number,
+    windSpeed: number,
     humidity: number,
     precipitation: number
 }

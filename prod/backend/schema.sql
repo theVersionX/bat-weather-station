@@ -3,11 +3,11 @@ use avuwaker_exoProductions;
 create table weather_station_data_tbl (
   id bigint AUTO_INCREMENT PRIMARY KEY,
   timestamp timestamp,
-  pressure int,
+  pressure float,
   temperature int,
-  windStrength int,
+  windSpeed int,
   humidity int,
-  precipitation int
+  precipitation float
 );
 
 create table weather_station_antennas_tbl (
