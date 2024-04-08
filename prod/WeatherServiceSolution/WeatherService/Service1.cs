@@ -10,6 +10,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
+
+//TUTORIAL FOR C# Services ************************************************
+//https://www.c-sharpcorner.com/article/create-windows-services-in-c-sharp/
+
 namespace WeatherService
 {
     public partial class Service1 : ServiceBase
