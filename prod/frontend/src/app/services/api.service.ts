@@ -56,7 +56,6 @@ export class ApiService {
     );
   }
   saveAntennaSettings(username:string,password:string,antennaId:string, antennaSettings: Antenna): Observable<boolean> {
-    console.log(JSON.stringify(antennaSettings) );
     return this.httpClient.post<boolean>(
       `${this.getServerPath()}/saveAntennaSettings.php`,
       { username:username,password:password,antennaId:antennaId, antenna: JSON.stringify(antennaSettings) }
