@@ -9,16 +9,23 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using WeatherService.Services;
 
 
-//TUTORIAL FOR C# Services ************************************************
-//https://www.c-sharpcorner.com/article/create-windows-services-in-c-sharp/
+/*TUTORIAL FOR C# Services ************************************************
+https://www.c-sharpcorner.com/article/create-windows-services-in-c-sharp/
+cd C:\Windows\Microsoft.NET\Framework\v4.0.30319 
+InstallUtil.exe -u C:\Users\domin\Documents\Dev\Web\Angular\bat-weather-station\prod\WeatherServiceSolution\WeatherService\bin\Debug\WeatherService.exe
+InstallUtil.exe C:\Users\domin\Documents\Dev\Web\Angular\bat-weather-station\prod\WeatherServiceSolution\WeatherService\bin\Debug\WeatherService.exe
+*/
 
 namespace WeatherService
 {
     public partial class Service1 : ServiceBase
     {
         Timer timer = new Timer(); // name space(using System.Timers;)
+        MasterService masterService=new MasterService();
+
         public Service1()
         {
             InitializeComponent();
@@ -27,15 +34,17 @@ namespace WeatherService
         {
             WriteToFile("Service is started at " + DateTime.Now);
             timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
-            timer.Interval = 5000; //number in milisecinds
+            timer.Interval = 10*60*1000; //number in milisecinds
             timer.Enabled = true;
         }
+
         protected override void OnStop()
         {
             WriteToFile("Service is stopped at " + DateTime.Now);
         }
         private void OnElapsedTime(object source, ElapsedEventArgs e)
         {
+            masterService.startGettingAndInsertingWeatherData();
             WriteToFile("Service is recall at " + DateTime.Now);
         }
         public void WriteToFile(string Message)

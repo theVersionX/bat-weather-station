@@ -11,7 +11,7 @@
 
 ## Projekt Weiterentwickeln
 
-### Projekt Struktur erweitern
+### GUI Projekt Struktur erweitern
 - Neue Seite erstellen: 
     - cd prod/frontend
     - ng g c pages/new-page-name
@@ -24,3 +24,9 @@
 - API zu Datenbank erweitern:
     - PHP API ist im Ordner backend aufzufinden. Siehe database-shared.php für weitere Schritte.
     - api-service.ts in services/api-service-ts übernimmt POST-Requests für Daten senden & empfangen
+
+### Service erweitern
+- Im C# Projekt WeatherServiceSolution ist ein Windows Service enthalten, der Periodisch alle 10 Minuten
+  Daten via HttpRequest/PHP Backend in die Datenbank einfüllt.
+- Im Ordner Models sind die Wetter Daten Strukturen enthalten 
+- im File Service1.cs (-> View Code) ist der Initialisierungs Code des Services enthalten
