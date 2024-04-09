@@ -1,4 +1,4 @@
 export interface Coord{
     lat:number,
-    ling:number,
+    long:number,
 }

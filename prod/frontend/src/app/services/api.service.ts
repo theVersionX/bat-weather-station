@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { GlobalVariablesService } from './global-variables.service';
 import { WeatherData } from '../shared/interfaces/weather-data';
 import { Observation, ObservationData } from '../shared/interfaces/observation';
+import { Antenna } from '../shared/interfaces/antenna';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,7 @@ export class ApiService {
   constructor(
     private httpClient: HttpClient,
     private globalVariablesService: GlobalVariablesService
-  ) {}
+  ) { }
 
   loadAllWeatherData(): Observable<WeatherData> {
     return this.httpClient.post<WeatherData>(
@@ -45,6 +46,20 @@ export class ApiService {
     return this.httpClient.post<boolean>(
       `${this.getServerPath()}/insertWeatherData.php`,
       weatherData
+    );
+  }
+
+  loadAntennaSettings(username:string,password:string,antennaId:string): Observable<string> {
+    return this.httpClient.post<string>(
+      `${this.getServerPath()}/loadAntennaSettings.php`,
+      {username:username,password:password,antennaId:antennaId }
+    );
+  }
+  saveAntennaSettings(username:string,password:string,antennaId:string, antennaSettings: Antenna): Observable<boolean> {
+    console.log(JSON.stringify(antennaSettings) );
+    return this.httpClient.post<boolean>(
+      `${this.getServerPath()}/saveAntennaSettings.php`,
+      { username:username,password:password,antennaId:antennaId, antenna: JSON.stringify(antennaSettings) }
     );
   }
 
