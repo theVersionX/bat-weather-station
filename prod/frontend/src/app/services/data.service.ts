@@ -45,17 +45,13 @@ export class DataService {
     return o[propertyName]; // o[propertyName] is of type T[K]
   }
 
-  getWeatherDataById(weatherParam: string): DataPoint[] {
+  getWeatherDataById(weatherParamId: string): DataPoint[] {
     const dataPoints: DataPoint[] = [];
     if (this.allWeatherData?.timestamps != undefined) {
-      const field = weatherParam as keyof WeatherData;
+      const field = weatherParamId as keyof WeatherData;
 
       let arr:any=this.allWeatherData[field];
-      console.log(arr);
-      console.log(weatherParam);
-      //console.log();
-      //let arr:any=this.getProperty(this.allWeatherData,weatherParam as keyof WeatherData );
-      
+ 
       for (let i = 0; i < this.allWeatherData.timestamps.length; i++) {
         const dataPoint: DataPoint = {
           label: this.allWeatherData.timestamps[i],

@@ -1,34 +1,29 @@
-import { Title } from "@angular/platform-browser"
+import { WeatherParameter } from "../interfaces/weather-parameter"
 
 export const WEATHER_PARAMETERS = {
     pressure: {
-        title:"Druck",
+        title:"Druck (mb)",
         arrayName:"pressures"
     },
     temperature:{
-        title: "Temperatur",
+        title: "Temperatur (°C)",
         arrayName:"temperatures"
     },
     windSpeed: {
-        title:"Windgeschwindigkeit",
+        title:"Windgeschwindigkeit (m/s)",
         arrayName:"windSpeeds"
     },
     humidity:  {
-        title:"Luftfeuchtigkeit",
+        title:"Luftfeuchtigkeit (%)",
         arrayName:"humidities"
     },
     precipitation:  {
-        title:"Niederschlag",
+        title:"Niederschlag (mm)",
         arrayName:"precipitations"
     },
 }
 
-export interface WEATHER_PARAMETER{
-title:string,
-arrayName:string
-}
-
-export const WEATHER_PARAMETERS_AS_ARRAY:WEATHER_PARAMETER[]=[
+export const WEATHER_PARAMETERS_AS_ARRAY:WeatherParameter[]=[
     WEATHER_PARAMETERS.pressure,
     WEATHER_PARAMETERS.temperature,
     WEATHER_PARAMETERS.windSpeed,
