@@ -1,5 +1,7 @@
 <section id="history-section">
-    <div id="chart-container">
-        <canvasjs-chart [options]="chartOptions"></canvasjs-chart>
-    </div>
+    <ul>
+        <li  id="chart-item" *ngFor="let weatherParameter of getWeatherParameters()">
+                <canvasjs-chart [options]="getChartOptions(weatherParameter)"></canvasjs-chart>
+        </li>
+    </ul>
 </section>

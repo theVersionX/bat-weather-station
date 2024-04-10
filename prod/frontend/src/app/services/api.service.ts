@@ -15,13 +15,13 @@ export class ApiService {
     private globalVariablesService: GlobalVariablesService
   ) { }
 
-  loadAllWeatherData(): Observable<WeatherData> {
+  loadAllWeatherData(username:string,password:string): Observable<WeatherData> {
     return this.httpClient.post<WeatherData>(
       `${this.getServerPath()}/loadAllWeatherData.php`,
-      {}
+      {username:username,password:password}
     );
   }
-  loadLatestWeatherData(): Observable<WeatherData[]> {
+  loadLatestWeatherData(username:string,password:string): Observable<WeatherData[]> {
     return this.httpClient.post<WeatherData[]>(
       `${this.getServerPath()}/loadLatestWeatherData.php`,
       {}
@@ -35,7 +35,7 @@ export class ApiService {
     );
   }
 
-  loadWindWarning(): Observable<boolean> {
+  loadWindWarning(username:string,password:string): Observable<boolean> {
     return this.httpClient.post<boolean>(
       `${this.getServerPath()}/loadWindWarning.php`,
       {}

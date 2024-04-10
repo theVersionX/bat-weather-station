@@ -5,21 +5,39 @@ require 'authenticate.php';
 
 //functions--------------------------------------------------------
 $allWeatherData;
-
+$weatherData = [
+    'ids' => [],
+    'timestamps' => [],
+    'pressures' => [],
+    'temperatures' => [],
+    'windStrengths' => [],
+    'humidities' => [],
+    'precipitations' => [],
+];
 function addWeatherDataToAllWeatherData($data_db, $ind)
 {
     global $allWeatherData;
-
+/*
     $weatherData = [
         'id' => filter_var($data_db["id"], FILTER_VALIDATE_INT),
         'timestamp' => $data_db["timestamp"],
-        'pressure' => filter_var($data_db["pages"], FILTER_VALIDATE_INT),
+        'pressure' => filter_var($data_db["pressure"], FILTER_VALIDATE_INT),
         'temperature' => filter_var($data_db["temperature"], FILTER_VALIDATE_INT),
         'windStrength' => filter_var($data_db["windStrength"], FILTER_VALIDATE_INT),
         'humidity' => filter_var($data_db["humidity"], FILTER_VALIDATE_INT),
         'precipitation' => filter_var($data_db["precipitation"], FILTER_VALIDATE_INT),
     ];
-    $allWeatherData[$ind] = $weatherData;
+    */
+
+    $allWeatherData['ids'][$ind]=filter_var($data_db["id"], FILTER_VALIDATE_INT);
+    $allWeatherData['timestamps'][$ind]=$data_db["timestamp"];
+    $allWeatherData['pressures'][$ind]=filter_var($data_db["pressure"], FILTER_VALIDATE_FLOAT);
+    $allWeatherData['temperatures'][$ind]=filter_var($data_db["temperature"], FILTER_VALIDATE_INT);
+    $allWeatherData['windSpeeds'][$ind]=filter_var($data_db["windSpeed"], FILTER_VALIDATE_INT);
+    $allWeatherData['humidities'][$ind]=filter_var($data_db["humidity"], FILTER_VALIDATE_INT);
+    $allWeatherData['precipitations'][$ind]=filter_var($data_db["precipitation"], FILTER_VALIDATE_FLOAT);
+
+    //$allWeatherData[$ind] = $weatherData;
 }
 
 //main---------------------------------------------------------------

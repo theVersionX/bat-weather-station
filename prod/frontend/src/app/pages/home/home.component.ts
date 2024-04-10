@@ -1,13 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../../services/api.service';
-import { HttpClientModule } from '@angular/common/http';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { DataPoint } from '../../shared/interfaces/data-point';
-import {
-  Observation,
-  ObservationData,
-} from '../../shared/interfaces/observation';
-import { WeatherData } from '../../shared/interfaces/weather-data';
 
 @Component({
   selector: 'app-home',
@@ -35,6 +29,7 @@ export class HomeComponent {
       console.log(worked);
     });
     */
+   /*
     apiService
       .getWeatherDataFromWeatherUnderground()
       .subscribe((res: ObservationData) => {
@@ -58,6 +53,7 @@ export class HomeComponent {
             });
         }
       });
+      */
   }
 
   getTemperatureData(): DataPoint[] {
