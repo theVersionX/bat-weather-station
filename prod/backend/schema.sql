@@ -10,9 +10,9 @@ create table weather_station_data_tbl (
   precipitation float
 );
 
-create table weather_station_antennas_tbl (
-  id bigint AUTO_INCREMENT PRIMARY KEY,
-  antenna mediumtext
+create table weather_station_hardware_tbl (
+  id varchar(50) PRIMARY KEY,
+  hardware mediumtext
 );
 
 create table weather_station_wind_warning_tbl(

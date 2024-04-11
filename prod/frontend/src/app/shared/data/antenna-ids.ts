@@ -1,3 +1,4 @@
-export const ANTENNA_IDS={
-    parabol:"Parabol"
+export const HARDWARE_IDS={
+    parabolAntenna:"Parabol",
+    satellite:"Satellit",
 }

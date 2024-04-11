@@ -7,7 +7,7 @@ import { faCheck, faSave } from '@fortawesome/free-solid-svg-icons';
 import { ApiService } from '../../services/api.service';
 import { DataService } from '../../services/data.service';
 import { AccountService } from '../../services/account.service';
-import { ANTENNA_IDS } from '../../shared/data/antenna-ids';
+import { HARDWARE_IDS } from '../../shared/data/antenna-ids';
 
 @Component({
   selector: 'app-settings',
@@ -26,6 +26,7 @@ export class SettingsComponent {
       elevation: 0,
       frequency: 0,
       efficiency: 0,
+      polarisationAngle:0
     },
   };
 
@@ -36,13 +37,13 @@ export class SettingsComponent {
   }
 
   loadAntennaSettings(): void {
-    this.dataService.loadAntennaSettings((antennaSettings: Antenna) => {
+    this.dataService.loadHardwareSettings(HARDWARE_IDS.parabolAntenna, (antennaSettings: Antenna) => {
       this.antennaSettings = antennaSettings;
     });
   }
 
   save(): void {
-    this.apiService.saveAntennaSettings(this.accountService.authenticationData.username, this.accountService.authenticationData.password, ANTENNA_IDS.parabol, this.antennaSettings).subscribe((worked: boolean) => {
+    this.dataService.saveHardwareSettings(HARDWARE_IDS.parabolAntenna, JSON.stringify(this.antennaSettings),(worked:boolean)=>{
       console.log(worked);
       this.saveIcon=faCheck;
       setTimeout(()=>{

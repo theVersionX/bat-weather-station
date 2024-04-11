@@ -44,8 +44,13 @@
                 </li>
                 <li>
                     <label for="efficiency">Effizienz</label>
-                    <input class="text-input" type="number" name="frequency"
+                    <input class="text-input" type="number" name="efficiency"
                         [(ngModel)]="antennaSettings.antennaParams.efficiency">
+                </li>
+                <li>
+                    <label for="polarisation-angle">PolarisationsWinkel</label>
+                    <input class="text-input" type="number" name="polarisation-angle"
+                        [(ngModel)]="antennaSettings.antennaParams.polarisationAngle">
                 </li>
             </ul>
         </form>

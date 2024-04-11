@@ -49,16 +49,16 @@ export class ApiService {
     );
   }
 
-  loadAntennaSettings(username:string,password:string,antennaId:string): Observable<string> {
+  loadHardwareSettings(username:string,password:string,hardwareId:string): Observable<string> {
     return this.httpClient.post<string>(
-      `${this.getServerPath()}/loadAntennaSettings.php`,
-      {username:username,password:password,antennaId:antennaId }
+      `${this.getServerPath()}/loadHardwareSettings.php`,
+      {username:username,password:password,hardwareId:hardwareId }
     );
   }
-  saveAntennaSettings(username:string,password:string,antennaId:string, antennaSettings: Antenna): Observable<boolean> {
+  saveHardwareSettings(username:string,password:string,hardwareId:string, hardwareSettings: string): Observable<boolean> {
     return this.httpClient.post<boolean>(
-      `${this.getServerPath()}/saveAntennaSettings.php`,
-      { username:username,password:password,antennaId:antennaId, antenna: JSON.stringify(antennaSettings) }
+      `${this.getServerPath()}/saveHardwareSettings.php`,
+      { username:username,password:password,hardwareId:hardwareId, hardware: hardwareSettings }
     );
   }
 

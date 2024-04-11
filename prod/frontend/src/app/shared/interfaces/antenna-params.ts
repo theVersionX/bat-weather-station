@@ -4,4 +4,5 @@ export interface AntennaParams {
     elevation: number,
     frequency: number,
     efficiency: number,
+    polarisationAngle:number
 }
