@@ -1,7 +1,8 @@
 export const PAGES = {
-    settings:"Antenna",
     home: "Home",
     history:"History",
+    antennaSettings:"Antenna",
+    satellite:"Satellite",
     //route params------------------
   
     routeParams: {

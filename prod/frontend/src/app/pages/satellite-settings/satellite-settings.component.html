@@ -1,0 +1,24 @@
+<section id="satellite-settings-section" class="acc">
+    <h1>Antennen-Einstellungen</h1>
+
+    <div id="width-wrapper">
+        <form #f="ngForm">
+            <ul id="settings-list">
+                <li>
+                    <label for="antennaSettings-name">Satelliten Name</label>
+                    <input class="text-input" type="text" name="antennaSettings-name"
+                        [(ngModel)]="satelliteSettings.name" />
+                </li>
+                <li>
+                    <label for="meters-above-ground">Pfadhöhe (m)</label>
+                    <input class="text-input" type="number" name="meters-above-ground"
+                        [(ngModel)]="satelliteSettings.pahtHeight">
+                </li>
+            </ul>
+        </form>
+        <button class="btn-std" (click)="save()">
+            <h2>Settings speichern <fa-icon [icon]="saveIcon"></fa-icon></h2>
+        </button>
+    </div>
+
+</section>

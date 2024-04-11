@@ -1,4 +1,4 @@
 export interface Satellite{
     name:string,
-    pathRadius:number,
+    pahtHeight:number,
 }

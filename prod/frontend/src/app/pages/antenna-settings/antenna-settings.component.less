@@ -1,0 +1,21 @@
+@import "../../shared/variables.less";
+
+#settings-section {
+    min-height: calc(100vh - @padding * 2);
+    padding: @padding;
+}
+
+#width-wrapper{
+    max-width: @max-w-1;
+    margin-top: @margin;
+}
+
+.coord-container:nth-child(1){
+    width: calc(100% - @margin-smaller);
+    margin-right: @margin-smaller;
+}
+
+.coord-container:nth-child(2){
+    width: calc(100% - @margin-smaller);
+    margin-left: @margin-smaller;
+}

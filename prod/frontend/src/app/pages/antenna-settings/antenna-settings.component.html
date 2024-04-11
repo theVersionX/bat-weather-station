@@ -1,0 +1,62 @@
+<section id="settings-section" class="acc">
+    <h1>Antennen-Einstellungen</h1>
+
+    <div id="width-wrapper">
+        <form #f="ngForm">
+            <ul id="settings-list">
+                <li>
+                    <label for="antennaSettings-name">Antennen Name</label>
+                    <input class="text-input" type="text" name="antennaSettings-name" [(ngModel)]="antennaSettings.name" />
+                </li>
+
+                <li>
+                    <div class="coord-wrapper acr">
+                        <div class="coord-container">
+                            <label for="lat">Latitude</label>
+                            <input class="text-input" type="number" name="lat" [(ngModel)]="antennaSettings.coord.lat">
+                        </div>
+                        <div class="coord-container">
+                            <label for="long">Longitude</label>
+                            <input class="text-input" type="number" name="long" [(ngModel)]="antennaSettings.coord.long">
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <label for="meters-above-ground">Meter über Boden</label>
+                    <input class="text-input" type="number" name="meters-above-ground"
+                        [(ngModel)]="antennaSettings.antennaParams.metersAboveGround">
+                </li>
+                <li>
+                    <label for="diameter">Durchmesser</label>
+                    <input class="text-input" type="number" name="diameter"
+                        [(ngModel)]="antennaSettings.antennaParams.diameter">
+                </li>
+                <li>
+                    <label for="elevation">Elevation</label>
+                    <input class="text-input" type="number" name="elevation"
+                        [(ngModel)]="antennaSettings.antennaParams.elevation">
+                </li>
+                <li>
+                    <label for="frequency">Frequenz (Ghz)</label>
+                    <input class="text-input" type="number" name="frequency"
+                        [(ngModel)]="antennaSettings.antennaParams.frequency">
+                </li>
+                <li>
+                    <label for="efficiency">Effizienz</label>
+                    <input class="text-input" type="number" name="efficiency"
+                        [(ngModel)]="antennaSettings.antennaParams.efficiency">
+                </li>
+                <li>
+                    <label for="polarisation-angle">PolarisationsWinkel</label>
+                    <input class="text-input" type="number" name="polarisation-angle"
+                        [(ngModel)]="antennaSettings.antennaParams.polarisationAngle">
+                </li>
+            </ul>
+        </form>
+        <button class="btn-std" (click)="save()">
+            <h2>Settings speichern <fa-icon [icon]="saveIcon"></fa-icon></h2>
+        </button>
+    </div>
+
+</section>
