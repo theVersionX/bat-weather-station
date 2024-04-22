@@ -1,5 +1,6 @@
 import { GaseousAttenuation } from "../classes/calculations/gaseous-attenuation";
 import { AttenuationParam } from "../interfaces/attenuation-param";
+import { WeatherData } from "../interfaces/weather-data";
 
 
 
@@ -7,32 +8,32 @@ export const ATTENUATION_PARAMS={
     gaseousAttenuation:{
         title:"Abschwächung durch Gase",
         id:"gaseous-attenuation",
-        getData:new GaseousAttenuation().calculateAttenuation,
+        getData: (freqency:number,allWeatherData:WeatherData)=>{new GaseousAttenuation().calculateAttenuation(freqency,allWeatherData)},
     },
     precipitationAttenuation:{
         title:"Abschwächung durch Niederschlag",
         id:"precipitation-attenuation",
-        getData:new GaseousAttenuation().calculateAttenuation,
+        getData:()=>{},
     },
     cloudAttenuation:{
         title:"Abschwächung durch Wolken",
         id:"cloud-attenuation",
-        getData:new GaseousAttenuation().calculateAttenuation,
+        getData:()=>{},
     },
     scintillationAttenuation:{
         title:"Abschwächung durch Szintillation",
         id:"scintillation-attenuation",
-        getData:new GaseousAttenuation().calculateAttenuation,
+        getData:()=>{},
     },
     skyNoiseAttenuation:{
         title:"Abschwächung durch Rauschen (Himmel)",
         id:"sky-noise-attenuation",
-        getData:new GaseousAttenuation().calculateAttenuation,
+        getData:()=>{},
     },
     cosmicNoiseAttenuation:{
         title:"Abschwächung durch Rauschen (Kosmisch)",
         id:"cosmic-noise-attenuation",
-        getData:new GaseousAttenuation().calculateAttenuation,
+        getData:()=>{},
     },
 }
 
