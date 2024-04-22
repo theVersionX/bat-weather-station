@@ -3,5 +3,5 @@ import { WeatherData } from "../interfaces/weather-data";
 
 export abstract class Calculation{
 
-    abstract calculateAttenuation(allWeatherData:WeatherData):DataPoint[];
+    abstract calculateAttenuation(frequency:number, allWeatherData:WeatherData):DataPoint[];
 }
