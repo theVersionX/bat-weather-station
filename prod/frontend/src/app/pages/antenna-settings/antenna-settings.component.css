@@ -1,6 +1,6 @@
 #settings-section {
   min-height: calc(100vh - 30px * 2);
-  padding: 30px;
+  padding: 100px 30px;
 }
 #width-wrapper {
   max-width: 500px;

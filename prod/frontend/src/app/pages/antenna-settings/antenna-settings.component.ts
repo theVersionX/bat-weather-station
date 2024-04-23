@@ -32,7 +32,6 @@ export class AntennaSettingsComponent {
 
   save(): void {
     this.dataService.saveHardwareSettings(HARDWARE_IDS.parabolAntenna, JSON.stringify(this.antenna),(worked:boolean)=>{
-      console.log(worked);
       this.saveIcon=faCheck;
       setTimeout(()=>{
         this.saveIcon=faSave;

@@ -1,7 +1,7 @@
 import { DataPoint } from "../../interfaces/data-point";
 import { WeatherData } from "../../interfaces/weather-data";
-import { SPECTROSCOPIC_DATA_FOR_OXYGEN_ATTENUATION } from "./tables/spectroscopic-data-for-oxygen-attenuation";
-import { SPECTROSCOPIC_DATA_FOR_WATER_VAPOUR_ATTENUATION } from "./tables/spectroscopic-data-for-water-vapour-attenuation";
+import { SPECTROSCOPIC_DATA_FOR_OXYGEN_ATTENUATION } from "./tables/spectroscopic-data/spectroscopic-data-for-oxygen-attenuation";
+import { SPECTROSCOPIC_DATA_FOR_WATER_VAPOUR_ATTENUATION } from "./tables/spectroscopic-data/spectroscopic-data-for-water-vapour-attenuation";
 
 export class GaseousAttenuation {
 

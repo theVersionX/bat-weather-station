@@ -28,6 +28,11 @@
                         [(ngModel)]="antenna.antennaParams.metersAboveGround">
                 </li>
                 <li>
+                    <label for="meters-above-sea">Meter über Meer</label>
+                    <input class="text-input" type="number" name="meters-above-sea"
+                        [(ngModel)]="antenna.antennaParams.metersAboveSea">
+                </li>
+                <li>
                     <label for="diameter">Durchmesser (m)</label>
                     <input class="text-input" type="number" name="diameter"
                         [(ngModel)]="antenna.antennaParams.diameter">

@@ -31,6 +31,7 @@ const EMPTY_ANTENNA: Antenna = {
     coord: { long: 0, lat: 0 },
     antennaParams: {
         metersAboveGround: 0,
+        metersAboveSea:0,
         diameter: 0,
         elevation: 0,
         frequency: 0,
