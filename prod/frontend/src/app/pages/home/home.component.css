@@ -11,9 +11,10 @@
 }
 .chart-title {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 8px;
 }
-.chart-title {
+.chart-subtitle {
   text-align: center;
   margin-bottom: 30px;
+  color: #969696;
 }

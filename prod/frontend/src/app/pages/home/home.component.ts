@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { WeatherData } from '../../shared/interfaces/weather-data';
 import { DataPoint } from '../../shared/interfaces/data-point';
 import { WEATHER_PARAMETERS } from '../../shared/data/weather-parameters';
+import { AntennaParams } from '../../shared/interfaces/antenna-params';
 
 @Component({
   selector: 'app-home',
@@ -38,7 +39,7 @@ export class HomeComponent implements OnInit {
   calculateGraphs(): void {
     let weatherData=this.dataService.getAllWeatherData();
     for (let i = 0; i < this.getAttenuationParameters().length; i++) {
-      let dataPoints: DataPoint[] = this.getAttenuationParameters()[i].getData(this.dataService.getAntennaSettings().antennaParams.frequency,weatherData )
+      let dataPoints: DataPoint[] = this.getAttenuationParameters()[i].getData(this.getAntennaParams().frequency,weatherData )
       this.graphsData[i] = [
         {
           type: 'line',
@@ -61,6 +62,10 @@ export class HomeComponent implements OnInit {
 
   getAttenuationParameters(): AttenuationParam[] {
     return ATENUATION_PARAMS_AS_ARRAY;
+  }
+
+  getAntennaParams():AntennaParams{
+    return this.dataService.getAntennaSettings().antennaParams;
   }
 
   getChartOptions(ind: number): any {
