@@ -6,11 +6,11 @@ class EmptyObjects {
     getEmptyWeatherData(): WeatherData {
         return JSON.parse(JSON.stringify(EMPTY_WEATHER_DATA));
     }
-    getEmptyAntennaSettings(): Antenna {
-        return JSON.parse(JSON.stringify(EMPTY_ANTENNA_SETTINGS));
+    getEmptyAntenna(): Antenna {
+        return JSON.parse(JSON.stringify(EMPTY_ANTENNA));
     }
-    getEmptySatelliteSettings(): Satellite {
-        return JSON.parse(JSON.stringify(EMPTY_SATELLITE_SETTINGS));
+    getEmptySatellite(): Satellite {
+        return JSON.parse(JSON.stringify(EMPTY_SATELLITE));
     }
 }
 
@@ -26,7 +26,7 @@ const EMPTY_WEATHER_DATA: WeatherData = {
     precipitations: [],
 }
 
-const EMPTY_ANTENNA_SETTINGS: Antenna = {
+const EMPTY_ANTENNA: Antenna = {
     name: "",
     coord: { long: 0, lat: 0 },
     antennaParams: {
@@ -39,7 +39,8 @@ const EMPTY_ANTENNA_SETTINGS: Antenna = {
     },
 }
 
-const EMPTY_SATELLITE_SETTINGS: Satellite = {
+const EMPTY_SATELLITE: Satellite = {
     name: "",
     pathHeight: 0,
+    coord:{long:0,lat:0}
 }

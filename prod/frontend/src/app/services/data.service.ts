@@ -13,9 +13,9 @@ import { EMPTY_OBJECTS } from '../shared/data/empty-objects';
 })
 export class DataService {
 
-  private antennaSettings: Antenna = EMPTY_OBJECTS.getEmptyAntennaSettings();
-  private satelliteSettings: Satellite = EMPTY_OBJECTS.getEmptySatelliteSettings()
-  private allWeatherData: WeatherData = EMPTY_OBJECTS.getEmptyWeatherData();
+  private antenna: Antenna = EMPTY_OBJECTS.getEmptyAntenna();
+  private satellite: Satellite = EMPTY_OBJECTS.getEmptySatellite()
+  private weatherData: WeatherData = EMPTY_OBJECTS.getEmptyWeatherData();
 
   weatherDataUpdatedEvent: CustomEvent<WeatherData> = new CustomEvent<WeatherData>();
   hardwareSettingsUpdatedEvent: CustomEvent<void> = new CustomEvent<void>();
@@ -29,32 +29,30 @@ export class DataService {
     for (let hardwareId of HARDWARE_IDS_AS_ARRAY) {
       this.loadHardwareSettings(hardwareId, () => { });
     }
-    this.loadAllWeatherData();
+    this.loadWeatherData();
 
   }
   //load----------------------------------------------------------------------
   loadHardwareSettings(hardwareId: string, callback: Function): void {
     this.apiService.loadHardwareSettings(this.accountService.authenticationData.username, this.accountService.authenticationData.password, hardwareId).subscribe((hardwareSettings: string) => {
-      console.log(hardwareSettings);
       if (hardwareSettings.length != 0 && hardwareSettings != "-1") {
         switch (hardwareId) {
           case HARDWARE_IDS.parabolAntenna:
-            this.antennaSettings = JSON.parse(hardwareSettings);
-            callback(this.antennaSettings);
+            this.antenna = JSON.parse(hardwareSettings);
+            callback(this.antenna);
             break;
           case HARDWARE_IDS.satellite:
-            this.satelliteSettings = JSON.parse(hardwareSettings);
-            callback(this.satelliteSettings);
+            this.satellite = JSON.parse(hardwareSettings);
+            callback(this.satellite);
         }
         this.hardwareSettingsUpdatedEvent.emit();
       }
     });
   }
 
-  loadAllWeatherData(): void {
+  loadWeatherData(): void {
     this.apiService.loadAllWeatherData(this.accountService.authenticationData.username, this.accountService.authenticationData.password).subscribe((weatherData: WeatherData) => {
-      this.allWeatherData = weatherData;
-      console.log(this.allWeatherData);
+      this.weatherData = weatherData;
       this.weatherDataUpdatedEvent.emit(this.getAllWeatherData())
     });
   }
@@ -68,29 +66,29 @@ export class DataService {
   }
 
   getAntennaSettings(): Antenna {
-    return JSON.parse(JSON.stringify(this.antennaSettings));
+    return JSON.parse(JSON.stringify(this.antenna));
   }
   getSatelliteSettings(): Satellite {
-    return JSON.parse(JSON.stringify(this.satelliteSettings));
+    return JSON.parse(JSON.stringify(this.satellite));
   }
 
   getProperty<T, K extends keyof T>(o: T, propertyName: K): T[K] {
     return o[propertyName]; // o[propertyName] is of type T[K]
   }
   getAllWeatherData(): WeatherData {
-    return JSON.parse(JSON.stringify(this.allWeatherData));
+    return JSON.parse(JSON.stringify(this.weatherData));
   }
 
   getWeatherDataById(weatherParamId: string): DataPoint[] {
     const dataPoints: DataPoint[] = [];
-    if (this.allWeatherData?.timestamps != undefined) {
+    if (this.weatherData?.timestamps != undefined) {
       const field = weatherParamId as keyof WeatherData;
 
-      let arr: any = this.allWeatherData[field];
+      let arr: any = this.weatherData[field];
 
-      for (let i = 0; i < this.allWeatherData.timestamps.length; i++) {
+      for (let i = 0; i < this.weatherData.timestamps.length; i++) {
         const dataPoint: DataPoint = {
-          label: this.allWeatherData.timestamps[i],
+          label: this.weatherData.timestamps[i],
           y: arr[i]// this.allWeatherData[field][i]
         };
         dataPoints.push(dataPoint);

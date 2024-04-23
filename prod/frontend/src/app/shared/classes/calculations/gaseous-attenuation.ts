@@ -1,27 +1,23 @@
-import { Calculation } from "../../base-classes/calculation";
 import { DataPoint } from "../../interfaces/data-point";
 import { WeatherData } from "../../interfaces/weather-data";
 import { SPECTROSCOPIC_DATA_FOR_OXYGEN_ATTENUATION } from "./tables/spectroscopic-data-for-oxygen-attenuation";
 import { SPECTROSCOPIC_DATA_FOR_WATER_VAPOUR_ATTENUATION } from "./tables/spectroscopic-data-for-water-vapour-attenuation";
 
-export class GaseousAttenuation extends Calculation {
-
-    gamma: number = 0;
-
+export class GaseousAttenuation {
 
     constructor() {
-        super();
     }
 
-    override calculateAttenuation(freqency: number, allWeatherData: WeatherData): DataPoint[] {
+    calculateAttenuation(freqency: number, allWeatherData: WeatherData): DataPoint[] {
         // console.log("calculating");
         let dataPoints: DataPoint[] = [];
         for (let i = 0; i < allWeatherData.ids.length; i++) {
             let temperature = allWeatherData.temperatures[i] + 273.15;
             let pressure = allWeatherData.pressures[i];
-            //attenuation in db
-            this.gamma = 0.182 * freqency * (this.getNImagOxygen(freqency, temperature, pressure) + this.getNImagWaterVapour(freqency, temperature, pressure));
-            dataPoints.push({ label: allWeatherData.timestamps[i], y: this.gamma });
+
+            //attenuation in db/km
+            let gamma: number = 0.182 * freqency * (this.getNImagOxygen(freqency, temperature, pressure) + this.getNImagWaterVapour(freqency, temperature, pressure));
+            dataPoints.push({ label: allWeatherData.timestamps[i], y: gamma });
         }
         return dataPoints;
     }

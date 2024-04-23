@@ -8,6 +8,8 @@ import { WeatherData } from '../../shared/interfaces/weather-data';
 import { DataPoint } from '../../shared/interfaces/data-point';
 import { WEATHER_PARAMETERS } from '../../shared/data/weather-parameters';
 import { AntennaParams } from '../../shared/interfaces/antenna-params';
+import { GaseousAttenuation } from '../../shared/classes/calculations/gaseous-attenuation';
+import { PrecipitationAttenuation } from '../../shared/classes/calculations/precipitation-attenuation';
 
 @Component({
   selector: 'app-home',
@@ -37,15 +39,21 @@ export class HomeComponent implements OnInit {
   }
 
   calculateGraphs(): void {
-    let weatherData=this.dataService.getAllWeatherData();
+    let weatherData = this.dataService.getAllWeatherData();
     for (let i = 0; i < this.getAttenuationParameters().length; i++) {
-      let dataPoints: DataPoint[] = this.getAttenuationParameters()[i].getData(this.getAntennaParams().frequency,weatherData )
-      this.graphsData[i] = [
-        {
-          type: 'line',
-          dataPoints: dataPoints,
-        }
-      ];
+      let dataPoints: DataPoint[] = [];
+      switch (i) {
+        case 0:
+          dataPoints = new GaseousAttenuation().calculateAttenuation(this.getAntennaParams().frequency, weatherData)
+          this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
+          break;
+        case 1:
+          dataPoints = new PrecipitationAttenuation().calculateAttenuation( weatherData,this.dataService.getAntennaSettings(),this.dataService.getSatelliteSettings())
+          this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
+          break;
+      }
+
+
       /* //insert more lines into same chart
       if(weatherData.pressures.length==dataPoints.length){
         console.log("inserted");
@@ -56,15 +64,13 @@ export class HomeComponent implements OnInit {
       }
       */
     }
-
-    console.log(this.graphsData);
   }
 
   getAttenuationParameters(): AttenuationParam[] {
     return ATENUATION_PARAMS_AS_ARRAY;
   }
 
-  getAntennaParams():AntennaParams{
+  getAntennaParams(): AntennaParams {
     return this.dataService.getAntennaSettings().antennaParams;
   }
 

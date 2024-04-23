@@ -3,11 +3,10 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSave, faCheck } from '@fortawesome/free-solid-svg-icons';
-import { AccountService } from '../../services/account.service';
-import { ApiService } from '../../services/api.service';
 import { DataService } from '../../services/data.service';
 import { HARDWARE_IDS } from '../../shared/data/hardware-ids';
 import { Antenna } from '../../shared/interfaces/antenna';
+import { EMPTY_OBJECTS } from '../../shared/data/empty-objects';
 
 @Component({
   selector: 'app-antenna-settings',
@@ -17,33 +16,22 @@ import { Antenna } from '../../shared/interfaces/antenna';
   styleUrl: './antenna-settings.component.less'
 })
 export class AntennaSettingsComponent {
-  antennaSettings: Antenna = {
-    name: '',
-    coord: { lat: 0, long: 0 },
-    antennaParams: {
-      metersAboveGround: 0,
-      diameter: 0,
-      elevation: 0,
-      frequency: 0,
-      efficiency: 0,
-      polarisationAngle:0
-    },
-  };
+  antenna: Antenna =EMPTY_OBJECTS.getEmptyAntenna()
 
   saveIcon = faSave;
 
-  constructor(private apiService: ApiService, private dataService: DataService, private accountService: AccountService) {
+  constructor(private dataService: DataService) {
     this.loadAntennaSettings();
   }
 
   loadAntennaSettings(): void {
-    this.dataService.loadHardwareSettings(HARDWARE_IDS.parabolAntenna, (antennaSettings: Antenna) => {
-      this.antennaSettings = antennaSettings;
+    this.dataService.loadHardwareSettings(HARDWARE_IDS.parabolAntenna, (antenna: Antenna) => {
+      this.antenna = antenna;
     });
   }
 
   save(): void {
-    this.dataService.saveHardwareSettings(HARDWARE_IDS.parabolAntenna, JSON.stringify(this.antennaSettings),(worked:boolean)=>{
+    this.dataService.saveHardwareSettings(HARDWARE_IDS.parabolAntenna, JSON.stringify(this.antenna),(worked:boolean)=>{
       console.log(worked);
       this.saveIcon=faCheck;
       setTimeout(()=>{

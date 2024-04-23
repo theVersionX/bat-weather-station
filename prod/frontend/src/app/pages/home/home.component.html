@@ -4,7 +4,7 @@
     <ul id="parameter-list" *ngIf="graphsData.length>0">
         <li class="chart-item" *ngFor="let attenuationParameter of getAttenuationParameters();let i = index">
             <h2 class="chart-title">{{attenuationParameter.title}}</h2>
-            <h3 class="chart-subtitle">Frequenz:{{getAntennaParams().frequency}} GHz, Elevation:
+            <h3 class="chart-subtitle">Frequenz: {{getAntennaParams().frequency}} GHz, Elevation:
                 {{getAntennaParams().elevation}}°</h3>
             <canvasjs-chart [options]="getChartOptions(i)"></canvasjs-chart>
         </li>

@@ -5,19 +5,19 @@
         <form #f="ngForm">
             <ul id="settings-list">
                 <li>
-                    <label for="antennaSettings-name">Antennen Name</label>
-                    <input class="text-input" type="text" name="antennaSettings-name" [(ngModel)]="antennaSettings.name" />
+                    <label for="antenna-name">Antennen Name</label>
+                    <input class="text-input" type="text" name="antenna-name" [(ngModel)]="antenna.name" />
                 </li>
 
                 <li>
                     <div class="coord-wrapper acr">
                         <div class="coord-container">
                             <label for="lat">Latitude</label>
-                            <input class="text-input" type="number" name="lat" [(ngModel)]="antennaSettings.coord.lat">
+                            <input class="text-input" type="number" name="lat" [(ngModel)]="antenna.coord.lat">
                         </div>
                         <div class="coord-container">
                             <label for="long">Longitude</label>
-                            <input class="text-input" type="number" name="long" [(ngModel)]="antennaSettings.coord.long">
+                            <input class="text-input" type="number" name="long" [(ngModel)]="antenna.coord.long">
                         </div>
                     </div>
                 </li>
@@ -25,32 +25,32 @@
                 <li>
                     <label for="meters-above-ground">Meter über Boden</label>
                     <input class="text-input" type="number" name="meters-above-ground"
-                        [(ngModel)]="antennaSettings.antennaParams.metersAboveGround">
+                        [(ngModel)]="antenna.antennaParams.metersAboveGround">
                 </li>
                 <li>
                     <label for="diameter">Durchmesser (m)</label>
                     <input class="text-input" type="number" name="diameter"
-                        [(ngModel)]="antennaSettings.antennaParams.diameter">
+                        [(ngModel)]="antenna.antennaParams.diameter">
                 </li>
                 <li>
                     <label for="elevation">Elevation (°)</label>
                     <input class="text-input" type="number" name="elevation"
-                        [(ngModel)]="antennaSettings.antennaParams.elevation">
+                        [(ngModel)]="antenna.antennaParams.elevation">
                 </li>
                 <li>
                     <label for="frequency">Frequenz (Ghz)</label>
                     <input class="text-input" type="number" name="frequency"
-                        [(ngModel)]="antennaSettings.antennaParams.frequency">
+                        [(ngModel)]="antenna.antennaParams.frequency">
                 </li>
                 <li>
                     <label for="efficiency">Effizienz (%)</label>
                     <input class="text-input" type="number" name="efficiency"
-                        [(ngModel)]="antennaSettings.antennaParams.efficiency">
+                        [(ngModel)]="antenna.antennaParams.efficiency">
                 </li>
                 <li>
                     <label for="polarisation-angle">Polarisations-Winkel (°)</label>
                     <input class="text-input" type="number" name="polarisation-angle"
-                        [(ngModel)]="antennaSettings.antennaParams.polarisationAngle">
+                        [(ngModel)]="antenna.antennaParams.polarisationAngle">
                 </li>
             </ul>
         </form>

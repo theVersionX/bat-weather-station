@@ -7,12 +7,24 @@
                 <li>
                     <label for="antennaSettings-name">Satelliten Name</label>
                     <input class="text-input" type="text" name="antennaSettings-name"
-                        [(ngModel)]="satelliteSettings.name" />
+                        [(ngModel)]="satellite.name" />
                 </li>
                 <li>
                     <label for="meters-above-ground">Bahnhöhe (m)</label>
                     <input class="text-input" type="number" name="meters-above-ground"
-                        [(ngModel)]="satelliteSettings.pathHeight">
+                        [(ngModel)]="satellite.pathHeight">
+                </li>
+                <li>
+                    <div class="coord-wrapper acr">
+                        <div class="coord-container">
+                            <label for="lat">Latitude</label>
+                            <input class="text-input" type="number" name="lat" [(ngModel)]="satellite.coord.lat">
+                        </div>
+                        <div class="coord-container">
+                            <label for="long">Longitude</label>
+                            <input class="text-input" type="number" name="long" [(ngModel)]="satellite.coord.long">
+                        </div>
+                    </div>
                 </li>
             </ul>
         </form>
