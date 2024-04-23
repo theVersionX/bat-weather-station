@@ -1,10 +1,10 @@
 <section id="home-section" class="acc" >
     <h2>Momentane</h2>
     <h1>Wetterabhängige Abschwächungen</h1>
-    <ul id="parameter-list">
-        <li  class="chart-item" *ngFor="let attenuationParameter of getAttenuationParameters()">
+    <ul id="parameter-list" *ngIf="graphsData.length>0">
+        <li  class="chart-item" *ngFor="let attenuationParameter of getAttenuationParameters();let i = index">
             <h2 class="chart-title">{{attenuationParameter.title}}</h2>    
-            <canvasjs-chart [options]="getChartOptions(attenuationParameter)"></canvasjs-chart>
+            <canvasjs-chart [options]="getChartOptions(i)"></canvasjs-chart>
         </li>
     </ul>
 </section>

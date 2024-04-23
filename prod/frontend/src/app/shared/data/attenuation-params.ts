@@ -6,9 +6,9 @@ import { WeatherData } from "../interfaces/weather-data";
 
 export const ATTENUATION_PARAMS={
     gaseousAttenuation:{
-        title:"Abschwächung durch Gase",
+        title:"Abschwächung durch Gase (db/km)",
         id:"gaseous-attenuation",
-        getData: (freqency:number,allWeatherData:WeatherData)=>{new GaseousAttenuation().calculateAttenuation(freqency,allWeatherData)},
+        getData: (freqency:number,allWeatherData:WeatherData)=>{return new GaseousAttenuation().calculateAttenuation(freqency,allWeatherData)},
     },
     precipitationAttenuation:{
         title:"Abschwächung durch Niederschlag",
@@ -39,9 +39,9 @@ export const ATTENUATION_PARAMS={
 
 export const ATENUATION_PARAMS_AS_ARRAY:AttenuationParam[]=[
    ATTENUATION_PARAMS.gaseousAttenuation,
-   ATTENUATION_PARAMS.precipitationAttenuation,
-   ATTENUATION_PARAMS.cloudAttenuation,
-   ATTENUATION_PARAMS.scintillationAttenuation,
-   ATTENUATION_PARAMS.skyNoiseAttenuation,
-   ATTENUATION_PARAMS.cosmicNoiseAttenuation,
+  // ATTENUATION_PARAMS.precipitationAttenuation,
+  // ATTENUATION_PARAMS.cloudAttenuation,
+   //ATTENUATION_PARAMS.scintillationAttenuation,
+   //ATTENUATION_PARAMS.skyNoiseAttenuation,
+   //ATTENUATION_PARAMS.cosmicNoiseAttenuation,
 ]

@@ -4,17 +4,21 @@ import { ApiService } from './api.service';
 import { AccountService } from './account.service';
 import { DataPoint } from '../shared/interfaces/data-point';
 import { WeatherData } from '../shared/interfaces/weather-data';
-import { HARDWARE_IDS } from '../shared/data/antenna-ids';
+import { HARDWARE_IDS, HARDWARE_IDS_AS_ARRAY } from '../shared/data/hardware-ids';
 import { Satellite } from '../shared/interfaces/satellite';
-
+import { CustomEvent } from '../shared/classes/custom-event';
+import { EMPTY_OBJECTS } from '../shared/data/empty-objects';
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  private antennaSettings!: Antenna;
-  private satelliteSettings!: Satellite
-  private allWeatherData!: WeatherData;
+  private antennaSettings: Antenna = EMPTY_OBJECTS.getEmptyAntennaSettings();
+  private satelliteSettings: Satellite = EMPTY_OBJECTS.getEmptySatelliteSettings()
+  private allWeatherData: WeatherData = EMPTY_OBJECTS.getEmptyWeatherData();
+
+  weatherDataUpdatedEvent: CustomEvent<WeatherData> = new CustomEvent<WeatherData>();
+  hardwareSettingsUpdatedEvent: CustomEvent<void> = new CustomEvent<void>();
 
   constructor(private apiService: ApiService, private accountService: AccountService) {
     this.Init();
@@ -22,31 +26,36 @@ export class DataService {
 
   Init(): void {
     //this.loadAntennaSettings();
-    this.loadAllWeatherData(() => { });
+    for (let hardwareId of HARDWARE_IDS_AS_ARRAY) {
+      this.loadHardwareSettings(hardwareId, () => { });
+    }
+    this.loadAllWeatherData();
+
   }
   //load----------------------------------------------------------------------
   loadHardwareSettings(hardwareId: string, callback: Function): void {
     this.apiService.loadHardwareSettings(this.accountService.authenticationData.username, this.accountService.authenticationData.password, hardwareId).subscribe((hardwareSettings: string) => {
-    console.log(hardwareSettings);
-      if(hardwareSettings.length!=0 && hardwareSettings!="-1"){
-      switch (hardwareId) {
-        case HARDWARE_IDS.parabolAntenna:
-          this.antennaSettings = JSON.parse(hardwareSettings);
-          callback(this.antennaSettings);
-          break;
-        case HARDWARE_IDS.satellite:
-          this.satelliteSettings = JSON.parse(hardwareSettings);
-          callback(this.satelliteSettings);
+      console.log(hardwareSettings);
+      if (hardwareSettings.length != 0 && hardwareSettings != "-1") {
+        switch (hardwareId) {
+          case HARDWARE_IDS.parabolAntenna:
+            this.antennaSettings = JSON.parse(hardwareSettings);
+            callback(this.antennaSettings);
+            break;
+          case HARDWARE_IDS.satellite:
+            this.satelliteSettings = JSON.parse(hardwareSettings);
+            callback(this.satelliteSettings);
+        }
+        this.hardwareSettingsUpdatedEvent.emit();
       }
-     }
     });
   }
 
-  loadAllWeatherData(callback: Function): void {
+  loadAllWeatherData(): void {
     this.apiService.loadAllWeatherData(this.accountService.authenticationData.username, this.accountService.authenticationData.password).subscribe((weatherData: WeatherData) => {
       this.allWeatherData = weatherData;
-      callback(this.allWeatherData);
       console.log(this.allWeatherData);
+      this.weatherDataUpdatedEvent.emit(this.getAllWeatherData())
     });
   }
 
@@ -58,15 +67,18 @@ export class DataService {
     });
   }
 
-  getAntennaSettings(): void {
+  getAntennaSettings(): Antenna {
     return JSON.parse(JSON.stringify(this.antennaSettings));
   }
-  getSatelliteSettings(): void {
+  getSatelliteSettings(): Satellite {
     return JSON.parse(JSON.stringify(this.satelliteSettings));
   }
 
   getProperty<T, K extends keyof T>(o: T, propertyName: K): T[K] {
     return o[propertyName]; // o[propertyName] is of type T[K]
+  }
+  getAllWeatherData(): WeatherData {
+    return JSON.parse(JSON.stringify(this.allWeatherData));
   }
 
   getWeatherDataById(weatherParamId: string): DataPoint[] {

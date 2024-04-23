@@ -7,7 +7,8 @@ import { faSave, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { AccountService } from '../../services/account.service';
 import { ApiService } from '../../services/api.service';
 import { DataService } from '../../services/data.service';
-import { HARDWARE_IDS } from '../../shared/data/antenna-ids';
+import { HARDWARE_IDS } from '../../shared/data/hardware-ids';
+import { EMPTY_OBJECTS } from '../../shared/data/empty-objects';
 
 @Component({
   selector: 'app-satellite-settings',
@@ -18,10 +19,7 @@ import { HARDWARE_IDS } from '../../shared/data/antenna-ids';
   styleUrl: './satellite-settings.component.less'
 })
 export class SatelliteSettingsComponent {
-  satelliteSettings: Satellite = {
-    name: '',
-    pahtHeight:0,
-  };
+  satelliteSettings: Satellite= EMPTY_OBJECTS.getEmptySatelliteSettings();
 
   saveIcon = faSave;
 
