@@ -10,6 +10,7 @@ import { WEATHER_PARAMETERS } from '../../shared/data/weather-parameters';
 import { AntennaParams } from '../../shared/interfaces/antenna-params';
 import { GaseousAttenuation } from '../../shared/classes/calculations/gaseous-attenuation';
 import { PrecipitationAttenuation } from '../../shared/classes/calculations/precipitation-attenuation';
+import { CloudAttenuation } from '../../shared/classes/calculations/cloud-attenuation';
 
 @Component({
   selector: 'app-home',
@@ -48,7 +49,11 @@ export class HomeComponent implements OnInit {
           this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
           break;
         case 1:
-          dataPoints = new PrecipitationAttenuation().calculateAttenuation( weatherData,this.dataService.getAntennaSettings(),this.dataService.getSatelliteSettings())
+          dataPoints = new PrecipitationAttenuation().calculateAttenuation(weatherData, this.dataService.getAntennaSettings(), this.dataService.getSatelliteSettings())
+          this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
+          break;
+        case 2:
+          dataPoints = new CloudAttenuation().calculateAttenuation(weatherData, this.dataService.getAntennaSettings())
           this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
           break;
       }

@@ -11,11 +11,11 @@ export const ATTENUATION_PARAMS={
         id:"gaseous-attenuation",
     },
     precipitationAttenuation:{
-        title:"Abschwächung durch Niederschlag",
+        title:"Abschwächung durch Niederschlag (db/km)",
         id:"precipitation-attenuation",
     },
     cloudAttenuation:{
-        title:"Abschwächung durch Wolken",
+        title:"Abschwächung durch Wolken (db/km)",
         id:"cloud-attenuation",
     },
     scintillationAttenuation:{
@@ -35,7 +35,7 @@ export const ATTENUATION_PARAMS={
 export const ATENUATION_PARAMS_AS_ARRAY:AttenuationParam[]=[
    ATTENUATION_PARAMS.gaseousAttenuation,
    ATTENUATION_PARAMS.precipitationAttenuation,
-  // ATTENUATION_PARAMS.cloudAttenuation,
+   ATTENUATION_PARAMS.cloudAttenuation,
    //ATTENUATION_PARAMS.scintillationAttenuation,
    //ATTENUATION_PARAMS.skyNoiseAttenuation,
    //ATTENUATION_PARAMS.cosmicNoiseAttenuation,

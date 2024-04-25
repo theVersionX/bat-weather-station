@@ -23,7 +23,7 @@ export class PrecipitationAttenuation {
         let heightAboveSea: number = antenna.antennaParams.metersAboveSea;
         let frequency: number = antenna.antennaParams.frequency;
         let isVerticalPolarized: boolean = antenna.antennaParams.polarisationAngle == 90;
-        let theta: number = antenna.antennaParams.elevation;
+        let theta: number = antenna.antennaParams.elevation /180 * Math.PI;
 
         //satellite
         let satelliteLong: number = satellite.coord.long;
