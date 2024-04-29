@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
       let dataPoints: DataPoint[] = [];
       switch (i) {
         case 0:
-          dataPoints = new GaseousAttenuation().calculateAttenuation(this.getAntennaParams().frequency, weatherData)
+          dataPoints = new GaseousAttenuation().calculateAttenuation(this.getAntennaParams().frequency, weatherData,this.dataService.getAntennaSettings())
           this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
           break;
         case 1:

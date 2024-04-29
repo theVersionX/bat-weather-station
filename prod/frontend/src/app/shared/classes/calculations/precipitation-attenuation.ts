@@ -23,7 +23,7 @@ export class PrecipitationAttenuation {
         let heightAboveSea: number = antenna.antennaParams.metersAboveSea;
         let frequency: number = antenna.antennaParams.frequency;
         let isVerticalPolarized: boolean = antenna.antennaParams.polarisationAngle == 90;
-        let theta: number = antenna.antennaParams.elevation /180 * Math.PI;
+        let theta: number = antenna.antennaParams.elevation / 180 * Math.PI;
 
         //satellite
         let satelliteLong: number = satellite.coord.long;
@@ -40,8 +40,6 @@ export class PrecipitationAttenuation {
         let k: number = this.getK(isVerticalPolarized, frequency);
         let alpha: number = this.getA(isVerticalPolarized, frequency);
         let specificAttenuation = k * Math.pow(R001, alpha); //gamma in db/km
-        console.log(k, R001, alpha)
-        console.log(specificAttenuation)
 
         return dataPoints;
     }
@@ -50,17 +48,19 @@ export class PrecipitationAttenuation {
         let logK = 0;
         let k = isVertical ? K_V : K_H;
         for (let i = 0; i < k.j.length; i++) {
-            logK += (k.aj[i] * Math.exp(-(Math.pow((Math.log10(freqency - k.bj[i]) / k.cj[i]), 2)))) + k.mk * Math.log10(freqency) + k.ck;
+            logK += (k.aj[i] * Math.exp(-(Math.pow(((Math.log10(freqency) - k.bj[i]) / k.cj[i]), 2))));
         }
+        logK += k.mk * Math.log10(freqency) + k.ck;
         return Math.pow(10, logK);
     }
-    
+
     getA(isVertical: boolean, freqency: number): number {
         let alpha = 0;
         let a = isVertical ? A_V : A_H;
         for (let i = 0; i < a.j.length; i++) {
-            alpha += (a.aj[i] * Math.exp(-(Math.pow((Math.log10(freqency - a.bj[i]) / a.cj[i]), 2)))) + a.ma * Math.log10(freqency) + a.ca;
+            alpha += (a.aj[i] * Math.exp(-(Math.pow(((Math.log10(freqency)- a.bj[i]) / a.cj[i]), 2))));
         }
+        alpha += a.ma * Math.log10(freqency) + a.ca
         return alpha
     }
 
@@ -70,7 +70,6 @@ export class PrecipitationAttenuation {
         let precipitation_sorted: number[] = precipitations.sort((a, b) => b - a);
         let index001 = Math.floor(0.0001 * precipitations.length);
         let R001 = precipitation_sorted[index001];
-        console.log(R001)
         return 70.4; //in mm/hr
     }
 
