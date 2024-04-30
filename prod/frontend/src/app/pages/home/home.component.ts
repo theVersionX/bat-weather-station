@@ -6,16 +6,18 @@ import { DataService } from '../../services/data.service';
 import { CommonModule } from '@angular/common';
 import { WeatherData } from '../../shared/interfaces/weather-data';
 import { DataPoint } from '../../shared/interfaces/data-point';
-import { WEATHER_PARAMETERS } from '../../shared/data/weather-parameters';
 import { AntennaParams } from '../../shared/interfaces/antenna-params';
 import { GaseousAttenuation } from '../../shared/classes/calculations/gaseous-attenuation';
 import { PrecipitationAttenuation } from '../../shared/classes/calculations/precipitation-attenuation';
 import { CloudAttenuation } from '../../shared/classes/calculations/cloud-attenuation';
+import { CLOUD_NAMES_AS_ARRAY, CLOUD_TYPES, CLOUD_TYPES_AS_ARRAY } from '../../shared/data/cloud-types';
+import { CloudType } from '../../shared/interfaces/cloud-type';
+import { CustomRadioBtnsComponent } from '../../shared/shared-components/custom-radio-btns/custom-radio-btns.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, CanvasJSAngularChartsModule],
+  imports: [CommonModule, CanvasJSAngularChartsModule, CustomRadioBtnsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.less',
 })
@@ -24,6 +26,8 @@ export class HomeComponent implements OnInit {
   //allWeatherData: WeatherData = EMPTY_OBJECTS.getEmptyWeatherData();
 
   graphsData: any[][] = [];
+
+  cloudType: CloudType = JSON.parse(JSON.stringify( CLOUD_TYPES.cirrus));
 
   constructor(private dataService: DataService) {
     dataService.weatherDataUpdatedEvent.subscribe((allWeatherData: WeatherData) => {
@@ -45,7 +49,7 @@ export class HomeComponent implements OnInit {
       let dataPoints: DataPoint[] = [];
       switch (i) {
         case 0:
-          dataPoints = new GaseousAttenuation().calculateAttenuation(this.getAntennaParams().frequency, weatherData,this.dataService.getAntennaSettings())
+          dataPoints = new GaseousAttenuation().calculateAttenuation(this.getAntennaParams().frequency, weatherData, this.dataService.getAntennaSettings())
           this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
           break;
         case 1:
@@ -53,7 +57,7 @@ export class HomeComponent implements OnInit {
           this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
           break;
         case 2:
-          dataPoints = new CloudAttenuation().calculateAttenuation(weatherData, this.dataService.getAntennaSettings())
+          dataPoints = new CloudAttenuation().calculateAttenuation(weatherData, this.dataService.getAntennaSettings(), this.cloudType)
           this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
           break;
       }
@@ -69,6 +73,17 @@ export class HomeComponent implements OnInit {
       }
       */
     }
+  }
+
+  cloudNameSelected(cloudName: string): void {
+    for (let i = 0; i < CLOUD_TYPES_AS_ARRAY.length; i++) {
+      console.log(CLOUD_TYPES_AS_ARRAY[i].name)
+      if (cloudName == CLOUD_TYPES_AS_ARRAY[i].name) {
+        this.cloudType = JSON.parse(JSON.stringify(CLOUD_TYPES_AS_ARRAY[i]));
+        break;
+      }
+    }
+    this.calculateGraphs()
   }
 
   getAttenuationParameters(): AttenuationParam[] {
@@ -87,6 +102,10 @@ export class HomeComponent implements OnInit {
       },
       data: data,
     };
+  }
+
+  getCloudNames(): string[] {
+    return CLOUD_NAMES_AS_ARRAY
   }
 
 }

@@ -1,19 +1,18 @@
 import { Antenna } from "../../interfaces/antenna";
+import { CloudType } from "../../interfaces/cloud-type";
 import { DataPoint } from "../../interfaces/data-point";
 import { WeatherData } from "../../interfaces/weather-data";
 
 export class CloudAttenuation {
     constructor() { }
 
-    calculateAttenuation(allWeatherData: WeatherData, antenna: Antenna): DataPoint[] {
+    calculateAttenuation(allWeatherData: WeatherData, antenna: Antenna,cloudType:CloudType): DataPoint[] {
         // console.log("calculating");
         let dataPoints: DataPoint[] = [];
-        let theta: number = antenna.antennaParams.elevation/180*Math.PI;
         let frequency:number=antenna.antennaParams.frequency;
         for (let i = 0; i < allWeatherData.ids.length; i++) {
-            let temperature=allWeatherData.temperatures[i];
-
-            let cloudAttenuation: number = this.getCloudLiquidMassAbsorbtionCoefficient(frequency,temperature)*this.getLiquidWaterDensityOfCloud(); //db/km
+            let temperature=allWeatherData.temperatures[i]+273; //Temperature in Kelvin
+            let cloudAttenuation: number = this.getCloudLiquidMassAbsorbtionCoefficient(frequency,temperature)*cloudType.liquidWaterDensity; //db/km
             dataPoints.push({ label: allWeatherData.timestamps[i], y: cloudAttenuation });
         }
 
@@ -31,18 +30,9 @@ export class CloudAttenuation {
 
         let epsilonImag:number=((freqency*(epsilon0-epsilon1))/(fp*(1+Math.pow(freqency/fp,2))))+((freqency*(epsilon1-epsilon2))/(fs*(1+Math.pow(freqency/fs,2))));
         let epsilonReal:number=((epsilon0-epsilon1)/(1+Math.pow(freqency/fp,2)))+((epsilon1-epsilon2)/(1+Math.pow(freqency/fs,2)))+epsilon2;
-        let n:number= (1+epsilonReal)/(epsilonImag)
+        let n:number= (2+epsilonReal)/(epsilonImag)
         cloudLiquidMassAbsorbtionCoefficient=(0.819*freqency)/(epsilonImag*(1+Math.pow(n,2)));
 
         return cloudLiquidMassAbsorbtionCoefficient;
     }
-
-    getLiquidWaterDensityOfCloud(): number {
-        let liquidWaterDensity: number = 0.25;
-        
-        return liquidWaterDensity;
-    }
-
-
-
 }

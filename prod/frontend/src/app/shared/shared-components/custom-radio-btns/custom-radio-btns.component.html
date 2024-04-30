@@ -1,0 +1,10 @@
+<p class="label">{{title}}</p>
+<div class="radio-container">
+  <div class="radio acr" *ngFor="let listItem of list;let i2=index">
+    <button [ngClass]="currentSelected==listItem?'radio-btn checked acc':'radio-btn'"
+      (click)="selectItem(listItem)">
+      <div class="radio-btn-checked-elem"></div>
+    </button>
+    <p class="radio-label">{{listItem}}</p>
+  </div>
+</div>

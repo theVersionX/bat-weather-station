@@ -2,11 +2,25 @@
     <h2>Momentane</h2>
     <h1>Wetterabhängige Abschwächungen</h1>
     <ul id="parameter-list" *ngIf="graphsData.length>0">
-        <li class="chart-item" *ngFor="let attenuationParameter of getAttenuationParameters();let i = index">
-            <h2 class="chart-title">{{attenuationParameter.title}}</h2>
+        <li class="chart-item">
+            <h2 class="chart-title">{{getAttenuationParameters()[0].title}}</h2>
             <h3 class="chart-subtitle">Frequenz: {{getAntennaParams().frequency}} GHz, Elevation:
                 {{getAntennaParams().elevation}}°</h3>
-            <canvasjs-chart [options]="getChartOptions(i)"></canvasjs-chart>
+            <canvasjs-chart [options]="getChartOptions(0)"></canvasjs-chart>
+        </li>
+        <li class="chart-item">
+            <h2 class="chart-title">{{getAttenuationParameters()[1].title}}</h2>
+            <h3 class="chart-subtitle">Frequenz: {{getAntennaParams().frequency}} GHz, Elevation:
+                {{getAntennaParams().elevation}}°</h3>
+            <canvasjs-chart [options]="getChartOptions(1)"></canvasjs-chart>
+        </li>
+        <li class="chart-item">
+            <h2 class="chart-title">{{getAttenuationParameters()[2].title}}</h2>
+            <h3 class="chart-subtitle">Frequenz: {{getAntennaParams().frequency}} GHz, Elevation:
+                {{getAntennaParams().elevation}}°</h3>
+            <app-custom-radio-btns [list]="getCloudNames()"
+                (selectedEvent)="cloudNameSelected($event)"></app-custom-radio-btns>
+            <canvasjs-chart [options]="getChartOptions(2)"></canvasjs-chart>
         </li>
     </ul>
 </section>
