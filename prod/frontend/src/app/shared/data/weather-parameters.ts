@@ -18,7 +18,7 @@ export const WEATHER_PARAMETERS = {
         arrayName:"humidities"
     },
     precipitation:  {
-        title:"Niederschlag (mm)",
+        title:"Niederschlag (mm/h)",
         arrayName:"precipitations"
     },
 }

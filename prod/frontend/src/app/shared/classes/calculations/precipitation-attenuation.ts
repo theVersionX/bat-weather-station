@@ -21,7 +21,7 @@ export class PrecipitationAttenuation {
         let antennaLat: number = antenna.coord.lat;
         let antennaLong: number = antenna.coord.long;
         let heightAboveSea: number = antenna.antennaParams.metersAboveSea;
-        let frequency: number = antenna.antennaParams.frequency;
+        // let frequency: number = antenna.antennaParams.frequency;
         let isVerticalPolarized: boolean = antenna.antennaParams.polarisationAngle == 90;
         let theta: number = antenna.antennaParams.elevation / 180 * Math.PI;
 
@@ -36,10 +36,17 @@ export class PrecipitationAttenuation {
         let L0: number = 35 * Math.exp(-0.015 * R001);
         let reductionFactor001: number = 1 / (1 + (horizontalProjectionOfSlantPath / L0))//r001
 
-        //for specific attenuation
-        let k: number = this.getK(isVerticalPolarized, frequency);
-        let alpha: number = this.getA(isVerticalPolarized, frequency);
-        let specificAttenuation = k * Math.pow(R001, alpha); //gamma in db/km
+        for (let frequency = 1; frequency <= 40; frequency++) {
+            //for specific attenuation
+            let k: number = this.getK(isVerticalPolarized, frequency);
+            let alpha: number = this.getA(isVerticalPolarized, frequency);
+            let specificAttenuation = k * Math.pow(R001, alpha); //gamma in db/km
+            dataPoints.push({
+                label: frequency.toString() + " GHz",
+                y: specificAttenuation
+            })
+        }
+
 
         return dataPoints;
     }
@@ -58,19 +65,29 @@ export class PrecipitationAttenuation {
         let alpha = 0;
         let a = isVertical ? A_V : A_H;
         for (let i = 0; i < a.j.length; i++) {
-            alpha += (a.aj[i] * Math.exp(-(Math.pow(((Math.log10(freqency)- a.bj[i]) / a.cj[i]), 2))));
+            alpha += (a.aj[i] * Math.exp(-(Math.pow(((Math.log10(freqency) - a.bj[i]) / a.cj[i]), 2))));
         }
         alpha += a.ma * Math.log10(freqency) + a.ca
         return alpha
     }
 
 
-    getR001(precipitations: number[]): number {
-        //todo        
-        let precipitation_sorted: number[] = precipitations.sort((a, b) => b - a);
-        let index001 = Math.floor(0.0001 * precipitations.length);
-        let R001 = precipitation_sorted[index001];
-        return 70.4; //in mm/hr
+    getR001(precipitations: number[]): number { // in mm/hr
+        let valuesPerYear: number = 6 * 24 * 365; // 6 measurements per hr
+        let precipitationsOfOneYear: number[] = [];
+        for (let i = 0; i < precipitations.length; i++) {
+            if (i < valuesPerYear) {
+                precipitationsOfOneYear.push(precipitations[i]);
+            } else {
+                break;
+            }
+        }
+
+        let precipitationOfOneYear_sorted: number[] = precipitationsOfOneYear.sort((a, b) => b - a);
+        let index001 = Math.floor(0.0001 * precipitationsOfOneYear.length);
+        let R001 = precipitationOfOneYear_sorted[index001];
+        return R001;
+        //return 70.4;
     }
 
 
