@@ -15,8 +15,8 @@ namespace WeatherService.Services
     {
         string url = "https://weather.versionx.ch/api/";
 
-        public event EventHandler<PostEventArgs> PostRetreivedDataEvent; //durch das <MyEventArgs> kann man sich das delegate spahren.
-        public event EventHandler<PostEventArgs> InsertedDataEvent; //durch das <MyEventArgs> kann man sich das delegate spahren.
+        public event EventHandler<PostEventArgs> PostRetreivedDataEvent; 
+        public event EventHandler<PostEventArgs> InsertedDataEvent;
 
         public PostService() { }    
 

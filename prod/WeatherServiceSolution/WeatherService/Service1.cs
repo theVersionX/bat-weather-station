@@ -14,6 +14,7 @@ using WeatherService.Services;
 
 /*TUTORIAL FOR C# Services ************************************************
 https://www.c-sharpcorner.com/article/create-windows-services-in-c-sharp/
+ALS ADMIN in CMD
 cd C:\Windows\Microsoft.NET\Framework\v4.0.30319 
 InstallUtil.exe -u C:\Users\domin\Documents\Dev\Web\Angular\bat-weather-station\prod\WeatherServiceSolution\WeatherService\bin\Debug\WeatherService.exe
 InstallUtil.exe C:\Users\domin\Documents\Dev\Web\Angular\bat-weather-station\prod\WeatherServiceSolution\WeatherService\bin\Debug\WeatherService.exe
@@ -34,7 +35,7 @@ namespace WeatherService
         {
             WriteToFile("Service is started at " + DateTime.Now);
             timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
-            timer.Interval = 10*60*1000; //number in milisecinds
+            timer.Interval = 10*60*1000; //number in miliseconds
             timer.Enabled = true;
         }
 
