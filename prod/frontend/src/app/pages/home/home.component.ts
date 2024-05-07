@@ -13,11 +13,13 @@ import { CloudAttenuation } from '../../shared/classes/calculations/cloud-attenu
 import { CLOUD_NAMES_AS_ARRAY, CLOUD_TYPES, CLOUD_TYPES_AS_ARRAY } from '../../shared/data/cloud-types';
 import { CloudType } from '../../shared/interfaces/cloud-type';
 import { CustomRadioBtnsComponent } from '../../shared/shared-components/custom-radio-btns/custom-radio-btns.component';
+import { ScintillationAttenuation } from '../../shared/classes/calculations/scintillation-attenuation';
+import { CustomSliderComponent } from '../../shared/shared-components/custom-slider/custom-slider.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, CanvasJSAngularChartsModule, CustomRadioBtnsComponent],
+  imports: [CommonModule, CanvasJSAngularChartsModule, CustomRadioBtnsComponent,CustomSliderComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.less',
 })
@@ -27,7 +29,8 @@ export class HomeComponent implements OnInit {
 
   graphsData: any[][] = [];
 
-  cloudType: CloudType = JSON.parse(JSON.stringify( CLOUD_TYPES.cirrus));
+  cloudType: CloudType = JSON.parse(JSON.stringify(CLOUD_TYPES.cirrus)); //for cloud attenuation
+  pPercentageOfTime:number=1; //for scintillation attenuation
 
   constructor(private dataService: DataService) {
     dataService.weatherDataUpdatedEvent.subscribe((allWeatherData: WeatherData) => {
@@ -60,6 +63,10 @@ export class HomeComponent implements OnInit {
           dataPoints = new CloudAttenuation().calculateAttenuation(weatherData, this.dataService.getAntennaSettings(), this.cloudType)
           this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
           break;
+        case 3:
+          dataPoints = new ScintillationAttenuation().calculateAttenuation(weatherData, this.dataService.getAntennaSettings(), this.pPercentageOfTime)
+          this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
+          break;
       }
 
 
@@ -83,6 +90,12 @@ export class HomeComponent implements OnInit {
         break;
       }
     }
+    this.calculateGraphs()
+  }
+
+  pPercentageUpdated(value: number): void {
+    console.log(value);
+    this.pPercentageOfTime = value;
     this.calculateGraphs()
   }
 

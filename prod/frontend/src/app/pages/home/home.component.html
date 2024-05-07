@@ -22,5 +22,19 @@
                 (selectedEvent)="cloudNameSelected($event)"></app-custom-radio-btns>
             <canvasjs-chart [options]="getChartOptions(2)"></canvasjs-chart>
         </li>
+        <li class="chart-item">
+            <h2 class="chart-title">{{getAttenuationParameters()[3].title}}</h2>
+            <h3 class="chart-subtitle">Frequenz: {{getAntennaParams().frequency}} GHz, Elevation:
+                {{getAntennaParams().elevation}}°</h3>
+
+            <div class="slider-container">
+                <p class="label">Parameter p zur berechnung der Fadetiefe A(p) die in p% der Zeit überschritten wird</p>
+                <app-custom-slider class="custom-slider" (changedEvent)="pPercentageUpdated($event)" [value]="pPercentageOfTime" [min]="0.01"
+                    [max]="50.01"></app-custom-slider>
+                <p>p: {{pPercentageOfTime}} %.</p>
+            </div>
+
+            <canvasjs-chart [options]="getChartOptions(3)"></canvasjs-chart>
+        </li>
     </ul>
 </section>

@@ -18,3 +18,12 @@
   margin-bottom: 30px;
   color: #969696;
 }
+.slider-container {
+  margin-bottom: 18px;
+}
+.slider-container .label,
+.slider-container p {
+  width: 100%;
+  text-align: left;
+  margin: 8px 0px;
+}
