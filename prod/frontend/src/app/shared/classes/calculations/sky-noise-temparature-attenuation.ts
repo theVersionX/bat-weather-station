@@ -26,7 +26,6 @@ export class SkyNoiseTemperatureAttenuation {
                 label: allWeatherData.timestamps[i],
                 y: skyNoiseTemperatureAttenuation
             });
-
         }
         return dataPoints;
     }
@@ -38,7 +37,7 @@ export class SkyNoiseTemperatureAttenuation {
         let noiseOut:number=0;
         let SNRin:number=signalIn/noiseIn;
         let SNRout:number=signalOut/noiseOut;
-        F=SNRin/SNRout;
+        F=SNRin/SNRout; //referenztabelle, siehe NRT sw07 p2
         return F;
     }
 
@@ -50,7 +49,7 @@ export class SkyNoiseTemperatureAttenuation {
 
         let attenuations_sorted: number[] = attenuations.sort((a, b) => b - a);
         let index001 = Math.floor(0.0001 * attenuations.length);
-        let A = attenuations_sorted[index001];
+        let A = attenuations_sorted[index001]; //referenztabelle suchen
         
         return A;
     }
