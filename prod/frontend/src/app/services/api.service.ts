@@ -37,8 +37,7 @@ export class ApiService {
 
   loadWindWarning(username:string,password:string): Observable<boolean> {
     return this.httpClient.post<boolean>(
-      `${this.getServerPath()}/loadWindWarning.php`,
-      {}
+      `${this.getServerPath()}/loadWindWarning.php`,{username:username,password:password}
     );
   }
 

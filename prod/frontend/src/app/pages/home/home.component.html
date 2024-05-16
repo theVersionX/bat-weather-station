@@ -1,20 +1,41 @@
 <section id="home-section" class="acc">
     <h2>Momentane</h2>
     <h1>Wetterabhängige Abschwächungen</h1>
-    <ul id="parameter-list" *ngIf="graphsData.length>0">
-        <li class="chart-item">
+
+    <ul id="important-infos-list">
+        <li class="important-info-item">
+            <h2> Current attenuation
+            </h2>
+            <p>The total current attenuation with the set settings (transmission frequency, elevation angle, cloud
+                types and
+                weather parameters)</p>
+            <h1>{{totalAttenuation}} dB</h1>
+        </li>
+        <li class="important-info-item">
+            <h2> Wind Speed
+            </h2>
+            <p>Status of the current wind speed and information on whether the antenna should be moved to the safety
+                position.</p>
+            <h1>Is Critical: {{isCritical?'Yes':'No'}}</h1>
+        </li>
+    </ul>
+
+    <button class="btn-std show-large-graphs" (click)="showLargeGraphs=!showLargeGraphs" ><h2>{{showLargeGraphs?'Show small graphs':'Show large graphs'}}</h2></button>
+
+    <ul id="graph-list" *ngIf="graphsData.length>0">
+        <li [ngClass]="showLargeGraphs?'chart-item large':'chart-item'">
             <h2 class="chart-title">{{getAttenuationParameters()[0].title}}</h2>
             <h3 class="chart-subtitle">Frequenz: {{getAntennaParams().frequency}} GHz, Elevation:
                 {{getAntennaParams().elevation}}°</h3>
             <canvasjs-chart [options]="getChartOptions(0)"></canvasjs-chart>
         </li>
-        <li class="chart-item">
+        <li [ngClass]="showLargeGraphs?'chart-item large':'chart-item'">
             <h2 class="chart-title">{{getAttenuationParameters()[1].title}}</h2>
             <h3 class="chart-subtitle">Frequenz: 1-40 GHz, Elevation:
                 {{getAntennaParams().elevation}}°</h3>
             <canvasjs-chart [options]="getChartOptions(1)"></canvasjs-chart>
         </li>
-        <li class="chart-item">
+        <li [ngClass]="showLargeGraphs?'chart-item large':'chart-item'">
             <h2 class="chart-title">{{getAttenuationParameters()[2].title}}</h2>
             <h3 class="chart-subtitle">Frequenz: {{getAntennaParams().frequency}} GHz, Elevation:
                 {{getAntennaParams().elevation}}°</h3>
@@ -22,15 +43,15 @@
                 (selectedEvent)="cloudNameSelected($event)"></app-custom-radio-btns>
             <canvasjs-chart [options]="getChartOptions(2)"></canvasjs-chart>
         </li>
-        <li class="chart-item">
+        <li [ngClass]="showLargeGraphs?'chart-item large':'chart-item'">
             <h2 class="chart-title">{{getAttenuationParameters()[3].title}}</h2>
             <h3 class="chart-subtitle">Frequenz: {{getAntennaParams().frequency}} GHz, Elevation:
                 {{getAntennaParams().elevation}}°</h3>
 
             <div class="slider-container">
                 <p class="label">Parameter p zur berechnung der Fadetiefe A(p) die in p% der Zeit überschritten wird</p>
-                <app-custom-slider class="custom-slider" (changedEvent)="pPercentageUpdated($event)" [value]="pPercentageOfTime" [min]="0.01"
-                    [max]="50.01"></app-custom-slider>
+                <app-custom-slider class="custom-slider" (changedEvent)="pPercentageUpdated($event)"
+                    [value]="pPercentageOfTime" [min]="0.01" [max]="50.01"></app-custom-slider>
                 <p>p: {{pPercentageOfTime}} %.</p>
             </div>
 

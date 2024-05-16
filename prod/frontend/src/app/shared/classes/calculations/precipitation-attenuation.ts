@@ -13,7 +13,7 @@ export class PrecipitationAttenuation {
     constructor() {
     }
 
-    public calculateAttenuation(weatherData: WeatherData, antenna: Antenna, satellite: Satellite): DataPoint[] {
+    public calculateAttenuation(weatherData: WeatherData, antenna: Antenna, satellite: Satellite, attenuationAtCurrentFrequencyCallback:Function): DataPoint[] {
         // console.log("calculating");
         let dataPoints: DataPoint[] = [];
 
@@ -21,7 +21,7 @@ export class PrecipitationAttenuation {
         let antennaLat: number = antenna.coord.lat;
         let antennaLong: number = antenna.coord.long;
         let heightAboveSea: number = antenna.antennaParams.metersAboveSea;
-        // let frequency: number = antenna.antennaParams.frequency;
+        let antennaFrequency: number = antenna.antennaParams.frequency;
         let isVerticalPolarized: boolean = antenna.antennaParams.polarisationAngle == 90;
         let theta: number = antenna.antennaParams.elevation / 180 * Math.PI;
 
@@ -38,17 +38,24 @@ export class PrecipitationAttenuation {
 
         for (let frequency = 1; frequency <= 40; frequency++) {
             //for specific attenuation
-            let k: number = this.getK(isVerticalPolarized, frequency);
-            let alpha: number = this.getA(isVerticalPolarized, frequency);
-            let specificAttenuation = k * Math.pow(R001, alpha); //gamma in db/km
+            let specificAttenuation:number=this.calculateSpecificAttenuation(isVerticalPolarized,frequency,R001);
             dataPoints.push({
                 label: frequency.toString() + " GHz",
                 y: specificAttenuation
             })
         }
 
+        let attenuationAtCurrentFrequence:number=this.calculateSpecificAttenuation(isVerticalPolarized,antennaFrequency,R001);
+        attenuationAtCurrentFrequencyCallback(attenuationAtCurrentFrequence);
 
         return dataPoints;
+    }
+
+    calculateSpecificAttenuation(isVerticalPolarized:boolean,frequency:number,R001:number):number{
+        let k: number = this.getK(isVerticalPolarized, frequency);
+        let alpha: number = this.getA(isVerticalPolarized, frequency);
+        let specificAttenuation = k * Math.pow(R001, alpha); //gamma in db/km
+        return specificAttenuation;
     }
 
     getK(isVertical: boolean, freqency: number): number {

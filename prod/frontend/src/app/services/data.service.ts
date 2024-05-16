@@ -16,8 +16,12 @@ export class DataService {
   private antenna: Antenna = EMPTY_OBJECTS.getEmptyAntenna();
   private satellite: Satellite = EMPTY_OBJECTS.getEmptySatellite()
   private weatherData: WeatherData = EMPTY_OBJECTS.getEmptyWeatherData();
+  private isCritical: boolean = false;
+
+  private tenMinutes: number = 1000 * 60 * 10;
 
   weatherDataUpdatedEvent: CustomEvent<WeatherData> = new CustomEvent<WeatherData>();
+  windWarningUpdatedEvent: CustomEvent<boolean> = new CustomEvent<boolean>();
   hardwareSettingsUpdatedEvent: CustomEvent<void> = new CustomEvent<void>();
 
   constructor(private apiService: ApiService, private accountService: AccountService) {
@@ -30,6 +34,9 @@ export class DataService {
       this.loadHardwareSettings(hardwareId, () => { });
     }
     this.loadWeatherData();
+    this.loadWindWarning();
+
+    this.startLoadingInterval();
 
   }
   //load----------------------------------------------------------------------
@@ -50,6 +57,15 @@ export class DataService {
     });
   }
 
+  startLoadingInterval(): void {
+    setInterval(() => {
+      this.loadWeatherData();
+      this.loadWindWarning();
+    }, this.tenMinutes);
+  }
+
+
+
   loadWeatherData(): void {
     this.apiService.loadAllWeatherData(this.accountService.authenticationData.username, this.accountService.authenticationData.password).subscribe((weatherData: WeatherData) => {
       this.weatherData = weatherData;
@@ -57,6 +73,12 @@ export class DataService {
     });
   }
 
+  loadWindWarning(): void {
+    this.apiService.loadWindWarning(this.accountService.authenticationData.username, this.accountService.authenticationData.password).subscribe((isCritical: boolean) => {
+      this.isCritical = isCritical;
+      this.windWarningUpdatedEvent.emit(this.isCritical)
+    });
+  }
 
   //save-------------------------------------------------------------------------
   saveHardwareSettings(hardwareId: string, hardwareSettings: string, callback: Function): void {
@@ -77,6 +99,9 @@ export class DataService {
   }
   getAllWeatherData(): WeatherData {
     return JSON.parse(JSON.stringify(this.weatherData));
+  }
+  getIsCritical(): boolean {
+    return this.isCritical;
   }
 
   getWeatherDataById(weatherParamId: string): DataPoint[] {

@@ -19,7 +19,7 @@ import { CustomSliderComponent } from '../../shared/shared-components/custom-sli
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, CanvasJSAngularChartsModule, CustomRadioBtnsComponent,CustomSliderComponent],
+  imports: [CommonModule, CanvasJSAngularChartsModule, CustomRadioBtnsComponent, CustomSliderComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.less',
 })
@@ -28,14 +28,23 @@ export class HomeComponent implements OnInit {
   //allWeatherData: WeatherData = EMPTY_OBJECTS.getEmptyWeatherData();
 
   graphsData: any[][] = [];
+  isCritical: boolean = false;
 
   cloudType: CloudType = JSON.parse(JSON.stringify(CLOUD_TYPES.cirrus)); //for cloud attenuation
-  pPercentageOfTime:number=1; //for scintillation attenuation
+  pPercentageOfTime: number = 1; //for scintillation attenuation
+
+  totalAttenuation: number = 0;
+
+  showLargeGraphs: boolean = false;
 
   constructor(private dataService: DataService) {
     dataService.weatherDataUpdatedEvent.subscribe((allWeatherData: WeatherData) => {
       //this.allWeatherData = allWeatherData;
       this.calculateGraphs()
+    });
+    dataService.windWarningUpdatedEvent.subscribe((isCritical: boolean) => {
+      this.isCritical = isCritical;
+      console.log(isCritical)
     });
     dataService.hardwareSettingsUpdatedEvent.subscribe(() => {
       this.calculateGraphs()
@@ -48,25 +57,42 @@ export class HomeComponent implements OnInit {
 
   calculateGraphs(): void {
     let weatherData = this.dataService.getAllWeatherData();
+    this.totalAttenuation = 0;
     for (let i = 0; i < this.getAttenuationParameters().length; i++) {
       let dataPoints: DataPoint[] = [];
       switch (i) {
         case 0:
           dataPoints = new GaseousAttenuation().calculateAttenuation(this.getAntennaParams().frequency, weatherData, this.dataService.getAntennaSettings())
           this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
+          if (dataPoints.length > 0) {
+            this.totalAttenuation += dataPoints[dataPoints.length - 1].y
+          }
+
           break;
         case 1:
-          dataPoints = new PrecipitationAttenuation().calculateAttenuation(weatherData, this.dataService.getAntennaSettings(), this.dataService.getSatelliteSettings())
+          dataPoints = new PrecipitationAttenuation().calculateAttenuation(weatherData,
+            this.dataService.getAntennaSettings(),
+            this.dataService.getSatelliteSettings(),
+            (attenuationAtCurrentFrequency: number) => {
+              if (!isNaN(attenuationAtCurrentFrequency)) {
+                this.totalAttenuation += attenuationAtCurrentFrequency;
+              }
+            })
           this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
           break;
         case 2:
           dataPoints = new CloudAttenuation().calculateAttenuation(weatherData, this.dataService.getAntennaSettings(), this.cloudType)
           this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
+          if (dataPoints.length > 0) {
+            this.totalAttenuation += dataPoints[dataPoints.length - 1].y
+          }
           break;
         case 3:
           dataPoints = new ScintillationAttenuation().calculateAttenuation(weatherData, this.dataService.getAntennaSettings(), this.pPercentageOfTime)
           this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
-          break;
+          if (dataPoints.length > 0) {
+            this.totalAttenuation += dataPoints[dataPoints.length - 1].y
+          } break;
       }
 
 

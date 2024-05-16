@@ -25,15 +25,16 @@ if (isset($postdata) && !empty($postdata)) {
             if ($stmt->num_rows > 0) {
                 $stmt->bind_result($isCritical_db);
                 $stmt->fetch();
-                echo json_encode($isCritical_db); //worked
+
+                echo json_encode(filter_var($isCritical_db, FILTER_VALIDATE_BOOL)); //worked
             } else {
                 echo json_encode(-1); // didnt work (loaded 0 rows)
             }
             $stmt->close();
         } else {
-            echo json_encode(-1); //qry didnt work
+            echo json_encode(-2); //qry didnt work
         }
     } else {
-        echo json_encode(-1); //login didnt work
+        echo json_encode(-3); //login didnt work
     }
 }

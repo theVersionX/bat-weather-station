@@ -1,13 +1,44 @@
 #home-section {
   margin: 100px 0px;
 }
-#parameter-list {
+#important-infos-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 100px;
+  max-width: max-w-3;
+}
+.important-info-item {
+  width: calc(100% - 18px * 2 - 18px * 2);
+  margin: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+.important-info-item h2,
+p,
+h1 {
+  text-align: left;
+}
+.important-info-item p {
+  max-width: 500px;
+  margin: 18px 0px;
+}
+.btn-std.show-large-graphs {
+  margin-top: 100px;
+}
+#graph-list {
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 .chart-item {
-  width: 100%;
+  width: calc(50% - 18px * 2);
   margin: 100px 18px;
+}
+.chart-item.large {
+  width: calc(100% - 18px * 2);
 }
 .chart-title {
   text-align: center;
