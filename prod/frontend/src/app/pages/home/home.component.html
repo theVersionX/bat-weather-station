@@ -9,7 +9,7 @@
             <p>The total current attenuation with the set settings (transmission frequency, elevation angle, cloud
                 types and
                 weather parameters)</p>
-            <h1>{{totalAttenuation}} dB</h1>
+            <h1>{{totalAttenuation.dataPoints && totalAttenuation.dataPoints.length>0? totalAttenuation.dataPoints[totalAttenuation.dataPoints.length-1].y:0}} dB</h1>
         </li>
         <li class="important-info-item">
             <h2> Wind Speed
@@ -20,20 +20,30 @@
         </li>
     </ul>
 
-    <button class="btn-std show-large-graphs" (click)="showLargeGraphs=!showLargeGraphs" ><h2>{{showLargeGraphs?'Show small graphs':'Show large graphs'}}</h2></button>
+    <button class="btn-std show-large-graphs" (click)="showLargeGraphs=!showLargeGraphs">
+        <h2>{{showLargeGraphs?'Show small graphs':'Show large graphs'}}</h2>
+    </button>
 
     <ul id="graph-list" *ngIf="graphsData.length>0">
+
+        <li [ngClass]="showLargeGraphs?'chart-item large':'chart-item'">
+            <h2 class="chart-title">Totale Dämpfung</h2>
+            <h3 class="chart-subtitle">Frequenz: {{getAntennaParams().frequency}} GHz, Elevation:
+                {{getAntennaParams().elevation}}°</h3>
+            <canvasjs-chart [options]="getChartOptions(-1,'Date','Attenuation in dB')"></canvasjs-chart>
+        </li>
+
         <li [ngClass]="showLargeGraphs?'chart-item large':'chart-item'">
             <h2 class="chart-title">{{getAttenuationParameters()[0].title}}</h2>
             <h3 class="chart-subtitle">Frequenz: {{getAntennaParams().frequency}} GHz, Elevation:
                 {{getAntennaParams().elevation}}°</h3>
-            <canvasjs-chart [options]="getChartOptions(0)"></canvasjs-chart>
+            <canvasjs-chart [options]="getChartOptions(0,'Date','Attenuation in dB/km')"></canvasjs-chart>
         </li>
         <li [ngClass]="showLargeGraphs?'chart-item large':'chart-item'">
             <h2 class="chart-title">{{getAttenuationParameters()[1].title}}</h2>
             <h3 class="chart-subtitle">Frequenz: 1-40 GHz, Elevation:
-                {{getAntennaParams().elevation}}°</h3>
-            <canvasjs-chart [options]="getChartOptions(1)"></canvasjs-chart>
+                {{getAntennaParams().elevation}}°, Polarisationswinkel: {{getAntennaParams().polarisationAngle}}°</h3>
+            <canvasjs-chart [options]="getChartOptions(1,'Date','Attenuation in dB/km')"></canvasjs-chart>
         </li>
         <li [ngClass]="showLargeGraphs?'chart-item large':'chart-item'">
             <h2 class="chart-title">{{getAttenuationParameters()[2].title}}</h2>
@@ -41,7 +51,7 @@
                 {{getAntennaParams().elevation}}°</h3>
             <app-custom-radio-btns [list]="getCloudNames()"
                 (selectedEvent)="cloudNameSelected($event)"></app-custom-radio-btns>
-            <canvasjs-chart [options]="getChartOptions(2)"></canvasjs-chart>
+            <canvasjs-chart [options]="getChartOptions(2,'Date','Attenuation in dB/km')"></canvasjs-chart>
         </li>
         <li [ngClass]="showLargeGraphs?'chart-item large':'chart-item'">
             <h2 class="chart-title">{{getAttenuationParameters()[3].title}}</h2>
@@ -55,7 +65,7 @@
                 <p>p: {{pPercentageOfTime}} %.</p>
             </div>
 
-            <canvasjs-chart [options]="getChartOptions(3)"></canvasjs-chart>
+            <canvasjs-chart [options]="getChartOptions(3,'Date','Attenuation in dB')"></canvasjs-chart>
         </li>
     </ul>
 </section>

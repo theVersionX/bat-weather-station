@@ -33,9 +33,11 @@ export class HomeComponent implements OnInit {
   cloudType: CloudType = JSON.parse(JSON.stringify(CLOUD_TYPES.cirrus)); //for cloud attenuation
   pPercentageOfTime: number = 1; //for scintillation attenuation
 
-  totalAttenuation: number = 0;
+  totalAttenuation: any = {type:'line',dataPoints:[]};
 
   showLargeGraphs: boolean = false;
+
+  heightOfTroposphäre:number=10; 
 
   constructor(private dataService: DataService) {
     dataService.weatherDataUpdatedEvent.subscribe((allWeatherData: WeatherData) => {
@@ -57,7 +59,7 @@ export class HomeComponent implements OnInit {
 
   calculateGraphs(): void {
     let weatherData = this.dataService.getAllWeatherData();
-    this.totalAttenuation = 0;
+    this.totalAttenuation = [];
     for (let i = 0; i < this.getAttenuationParameters().length; i++) {
       let dataPoints: DataPoint[] = [];
       switch (i) {
@@ -65,9 +67,12 @@ export class HomeComponent implements OnInit {
           dataPoints = new GaseousAttenuation().calculateAttenuation(this.getAntennaParams().frequency, weatherData, this.dataService.getAntennaSettings())
           this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
           if (dataPoints.length > 0) {
-            this.totalAttenuation += dataPoints[dataPoints.length - 1].y
+            this.totalAttenuation={type:'line',dataPoints:JSON.parse(JSON.stringify(dataPoints))}
+            for(let i2=0;i2<dataPoints.length;i2++){
+              this.totalAttenuation.dataPoints[i2].y =dataPoints[i2].y*this.heightOfTroposphäre;
+            }
           }
-
+         
           break;
         case 1:
           dataPoints = new PrecipitationAttenuation().calculateAttenuation(weatherData,
@@ -75,7 +80,9 @@ export class HomeComponent implements OnInit {
             this.dataService.getSatelliteSettings(),
             (attenuationAtCurrentFrequency: number) => {
               if (!isNaN(attenuationAtCurrentFrequency)) {
-                this.totalAttenuation += attenuationAtCurrentFrequency;
+                for(let i2=0;i2<this.totalAttenuation.dataPoints.length;i2++){
+                  this.totalAttenuation.dataPoints[i2].y += attenuationAtCurrentFrequency*this.heightOfTroposphäre;
+                }
               }
             })
           this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
@@ -84,33 +91,26 @@ export class HomeComponent implements OnInit {
           dataPoints = new CloudAttenuation().calculateAttenuation(weatherData, this.dataService.getAntennaSettings(), this.cloudType)
           this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
           if (dataPoints.length > 0) {
-            this.totalAttenuation += dataPoints[dataPoints.length - 1].y
+
+            for (let i2 = 0; i2 < dataPoints.length; i2++) {
+              this.totalAttenuation.dataPoints[i2].y += dataPoints[i2].y*this.heightOfTroposphäre;
+            }
           }
           break;
         case 3:
           dataPoints = new ScintillationAttenuation().calculateAttenuation(weatherData, this.dataService.getAntennaSettings(), this.pPercentageOfTime)
           this.graphsData[i] = [{ type: 'line', dataPoints: dataPoints }];
           if (dataPoints.length > 0) {
-            this.totalAttenuation += dataPoints[dataPoints.length - 1].y
+            for (let i2 = 0; i2 < dataPoints.length; i2++) {
+              this.totalAttenuation.dataPoints[i2].y += dataPoints[i2].y
+            }
           } break;
       }
-
-
-      /* //insert more lines into same chart
-      if(weatherData.pressures.length==dataPoints.length){
-        console.log("inserted");
-        this.graphsData[i].push({
-          type:'line',
-          dataPoints:this.dataService.getWeatherDataById(WEATHER_PARAMETERS.temperature.arrayName)
-        })
-      }
-      */
-    }
+    }    
   }
 
   cloudNameSelected(cloudName: string): void {
     for (let i = 0; i < CLOUD_TYPES_AS_ARRAY.length; i++) {
-      console.log(CLOUD_TYPES_AS_ARRAY[i].name)
       if (cloudName == CLOUD_TYPES_AS_ARRAY[i].name) {
         this.cloudType = JSON.parse(JSON.stringify(CLOUD_TYPES_AS_ARRAY[i]));
         break;
@@ -120,7 +120,6 @@ export class HomeComponent implements OnInit {
   }
 
   pPercentageUpdated(value: number): void {
-    console.log(value);
     this.pPercentageOfTime = value;
     this.calculateGraphs()
   }
@@ -133,14 +132,27 @@ export class HomeComponent implements OnInit {
     return this.dataService.getAntennaSettings().antennaParams;
   }
 
-  getChartOptions(ind: number): any {
-    let data: any[] = this.graphsData[ind];
-    return {
+  getChartOptions(ind: number, lableAxisX: string, labelAxisY: string): any {
+    let data:any=[];
+    if(ind!=-1){
+       data = this.graphsData[ind];
+    }else{
+      data=[this.totalAttenuation];
+    }
+
+    const chartOptions: any = {
       title: {
         text: "",
       },
+      axisX: {
+        title: lableAxisX
+      },
+      axisY: {
+        title: labelAxisY
+      },
       data: data,
     };
+    return chartOptions
   }
 
   getCloudNames(): string[] {

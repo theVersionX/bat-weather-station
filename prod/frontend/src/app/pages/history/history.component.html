@@ -2,7 +2,7 @@
     <ul id="parameter-list">
         <li  class="chart-item" *ngFor="let weatherParameter of getWeatherParameters()">
             <h2 class="chart-title">{{weatherParameter.title}}</h2>     
-            <canvasjs-chart [options]="getChartOptions(weatherParameter)"></canvasjs-chart>
+            <canvasjs-chart [options]="getChartOptions(weatherParameter,'Date',weatherParameter.title)"></canvasjs-chart>
         </li>
     </ul>
 </section>

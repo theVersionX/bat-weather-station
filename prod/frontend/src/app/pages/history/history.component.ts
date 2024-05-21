@@ -22,10 +22,16 @@ export class HistoryComponent {
     return WEATHER_PARAMETERS_AS_ARRAY;
   }
 
-  getChartOptions(weatherParam:WeatherParameter):any{
+  getChartOptions(weatherParam:WeatherParameter, labelAxisX:string,labelAxisY:string):any{
     return {
       title: {
         text:"",
+      },
+      axisX: {
+        title: labelAxisX
+      },
+      axisY: {
+        title: labelAxisY
       },
       data: [
         {
