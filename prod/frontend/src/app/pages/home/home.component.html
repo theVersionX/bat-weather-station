@@ -30,7 +30,7 @@
             <h2 class="chart-title">Totale Dämpfung</h2>
             <h3 class="chart-subtitle">Frequenz: {{getAntennaParams().frequency}} GHz, Elevation:
                 {{getAntennaParams().elevation}}°</h3>
-            <canvasjs-chart [options]="getChartOptions(-1,'Date','Attenuation in dB')"></canvasjs-chart>
+            <canvasjs-chart class="chart" [options]="getChartOptions(-1,'Date','Attenuation in dB')"></canvasjs-chart>
         </li>
 
         <li [ngClass]="showLargeGraphs?'chart-item large':'chart-item'">

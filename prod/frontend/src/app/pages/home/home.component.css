@@ -40,6 +40,9 @@ h1 {
 .chart-item.large {
   width: calc(100% - 18px * 2);
 }
+.chart {
+  height: 80vh;
+}
 .chart-title {
   text-align: center;
   margin-bottom: 8px;
